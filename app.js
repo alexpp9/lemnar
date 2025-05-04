@@ -1,6 +1,9 @@
 const express = require('express');
 
-const PORT = 3000;
+const { port } = require('./config');
+// User
+const User = require('./models/user');
+
 const app = express();
 
 // Get / root
@@ -9,8 +12,8 @@ app.get('/', (req, res) => {
 });
 
 // Server listening
-app.listen(PORT, () => {
+app.listen(port, () => {
   console.log(`===========================`);
-  console.log(`App listening on PORT: ${PORT}`);
+  console.log(`App listening on PORT: ${port}`);
   console.log(`===========================`);
 });
