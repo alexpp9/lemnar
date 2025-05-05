@@ -21,6 +21,7 @@ const UserSchema = new Schema(
       required: true,
       minLength: [8, 'Password must be at least 8 characters long.'],
     },
+    isAdmin: { type: Boolean, default: false },
   },
   { timestamps: true }
 );
