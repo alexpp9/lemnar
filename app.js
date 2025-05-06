@@ -1,6 +1,7 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-const { port } = require('./config');
+const session = require('express-session');
+const { port, sessionSecret } = require('./config');
 // User
 const User = require('./models/user');
 // DB
@@ -11,7 +12,16 @@ const app = express();
 
 // Allows Express to understand JSON
 app.use(express.json());
-
+// Tells Express to use session
+app.use(
+  session({
+    secret: sessionSecret,
+    // Expires after 30000 miliseconds
+    cookie: { maxAge: 30000 },
+    // If true, it'll make a new session ID every time you make a request to the server
+    saveUninitialized: false,
+  })
+);
 // Get / root
 app.get('/', (req, res) => {
   res.send('Hello, World!');
