@@ -2,7 +2,6 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 const { port, sessionSecret } = require('./config');
-const passport = require('passport');
 // User
 const User = require('./models/user');
 // DB
@@ -13,6 +12,7 @@ const app = express();
 
 // Allows Express to understand JSON
 app.use(express.json());
+
 // Tells Express to use session
 app.use(
   session({
@@ -26,10 +26,11 @@ app.use(
     },
   })
 );
+
 // Get / root
 app.get('/', (req, res) => {
   if (!req.session.user) {
-    return res.status(401).send('Bad credentials');
+    return res.status(401).send('Bad credentials!');
   }
 
   res.status(201).send(req.session.user);
@@ -69,7 +70,6 @@ app.post('/registerUser', async (req, res) => {
 
   // If user is successfully registered; add user id to <session>
   req.session.user = user;
-
   res.status(201).json({
     status: 'success',
     message: 'User created!',
@@ -99,7 +99,6 @@ app.post('/loginUser', async (req, res) => {
 
   // Attaching user to session;
   req.session.user = user;
-  console.log(req.session);
   res.status(201).json({
     status: 'success',
     message: 'User logged in!',
