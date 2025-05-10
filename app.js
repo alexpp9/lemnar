@@ -67,6 +67,9 @@ app.post('/registerUser', async (req, res) => {
 
   await user.save();
 
+  // If user is successfully registered; add user id to <session>
+  req.session.user = user;
+
   res.status(201).json({
     status: 'success',
     message: 'User created!',
