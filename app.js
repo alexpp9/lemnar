@@ -1,7 +1,14 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
-const { port, sessionSecret } = require('./config');
+const {
+  port,
+  sessionSecret,
+  cloudinaryName,
+  cloudinaryAPI,
+  cloudinarySECRET,
+} = require('./config');
+const cloudinary = require('cloudinary').v2;
 // User
 const User = require('./models/user');
 // DB
@@ -26,6 +33,36 @@ app.use(
     },
   })
 );
+
+// Configure Cloudinary
+cloudinary.config({
+  cloud_name: cloudinaryName,
+  api_key: cloudinaryAPI,
+  api_secret: cloudinarySECRET,
+});
+
+(async function () {
+  const results = await cloudinary.uploader.upload('./test.jpg');
+  console.log(results);
+  // Dynamic URL
+  const url = cloudinary.url(results.public_id, {
+    transformation: [
+      {
+        quality: 'auto',
+      },
+      {
+        fetch_format: 'auto',
+      },
+      {
+        width: 1200,
+        height: 1200,
+        crop: 'fill',
+        gravity: 'auto',
+      },
+    ],
+  });
+  console.log(url);
+})();
 
 // Get / root
 app.get('/', (req, res) => {
