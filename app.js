@@ -2,6 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const session = require('express-session');
 const { port, sessionSecret } = require('./config');
+const passport = require('passport');
 // User
 const User = require('./models/user');
 // DB
@@ -16,14 +17,21 @@ app.use(express.json());
 app.use(
   session({
     secret: sessionSecret,
-    // Expires after 30000 miliseconds
-    cookie: { maxAge: 30000 },
     // If true, it'll make a new session ID every time you make a request to the server
     saveUninitialized: false,
+    // True, forces the session to be resave in the store, even if unmodified
+    resave: false,
+    cookie: {
+      maxAge: 60000 * 60, // 1h
+    },
   })
 );
 // Get / root
 app.get('/', (req, res) => {
+  if (!req.session.user) {
+    return res.status(401).send('Bad credentials');
+  }
+
   res.send('Hello, World!');
 });
 
@@ -45,7 +53,7 @@ app.post('/registerUser', async (req, res) => {
   if (existingUser) {
     return res
       .status(400)
-      .json({ status: 'error', message: 'Email already exists' });
+      .json({ status: 'error', message: 'User already exists' });
   }
 
   // Encrypt passoword
@@ -77,21 +85,18 @@ app.post('/loginUser', async (req, res) => {
 
   // find user via username
   const user = await User.findOne({ username });
-  if (!user) {
-    return res.status(404).json({
-      status: 'error',
-      message: 'User does not exist!',
-    });
-  }
-
   // Compare passwords
   const comparisonResult = await bcrypt.compare(password, user.password);
-  if (!comparisonResult) {
+  if (!user || !comparisonResult) {
     return res.status(401).json({
       status: 'error',
       message: 'Sorry! Bad credentials.',
     });
   }
+
+  // Attaching user to session;
+  req.session.user = user;
+  console.log(req.session);
   res.status(201).json({
     status: 'success',
     message: 'User logged in!',
