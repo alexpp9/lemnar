@@ -32,7 +32,7 @@ app.get('/', (req, res) => {
     return res.status(401).send('Bad credentials');
   }
 
-  res.send('Hello, World!');
+  res.status(201).send(req.session.user);
 });
 
 // Create user
@@ -101,6 +101,12 @@ app.post('/loginUser', async (req, res) => {
     status: 'success',
     message: 'User logged in!',
   });
+});
+
+app.post('/logoutUser', (req, res) => {
+  // Removes the user from the sesson, thus logging user out
+  req.session.user = null;
+  res.status(201).send('Logged you out!');
 });
 
 // Server listening
