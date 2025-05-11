@@ -11,6 +11,8 @@ const {
 const cloudinary = require('cloudinary').v2;
 // User
 const User = require('./models/user');
+// Item
+const Item = require('./models/item');
 // DB
 const connectDB = require('./db');
 
@@ -41,28 +43,28 @@ cloudinary.config({
   api_secret: cloudinarySECRET,
 });
 
-(async function () {
-  const results = await cloudinary.uploader.upload('./test.jpg');
-  console.log(results);
-  // Dynamic URL
-  const url = cloudinary.url(results.public_id, {
-    transformation: [
-      {
-        quality: 'auto',
-      },
-      {
-        fetch_format: 'auto',
-      },
-      {
-        width: 1200,
-        height: 1200,
-        crop: 'fill',
-        gravity: 'auto',
-      },
-    ],
-  });
-  console.log(url);
-})();
+// (async function () {
+//   const results = await cloudinary.uploader.upload('./test.jpg');
+//   console.log(results);
+//   // Dynamic URL
+//   const url = cloudinary.url(results.public_id, {
+//     transformation: [
+//       {
+//         quality: 'auto',
+//       },
+//       {
+//         fetch_format: 'auto',
+//       },
+//       {
+//         width: 1200,
+//         height: 1200,
+//         crop: 'fill',
+//         gravity: 'auto',
+//       },
+//     ],
+//   });
+//   console.log(url);
+// })();
 
 // Get / root
 app.get('/', (req, res) => {
@@ -146,6 +148,14 @@ app.post('/logoutUser', (req, res) => {
   // Removes the user from the sesson, thus logging user out
   req.session.user = null;
   res.status(201).send('Logged you out!');
+});
+
+// ========================
+// Creating Furniture Items
+app.post('/api/item', async (req, res) => {
+  console.log(req.session.user); // Shows user if logged in.
+
+  res.send('Hello from create!');
 });
 
 // Server listening
