@@ -199,6 +199,30 @@ app.post('/api/item', async (req, res) => {
   res.status(201).json({ status: 'success', message: 'Item created!' });
 });
 
+// Delete Item
+app.post('/api/item/:id', async (req, res) => {
+  const { id } = req.params;
+  // Check permission
+  if (!req.session.user || !req.session.user.isAdmin) {
+    return res.status(401).json({
+      status: 'Error',
+      message: 'You are unauthorized to perform this action!',
+    });
+  }
+  // Perform operation
+  const deletedItem = await Item.findByIdAndDelete(id);
+  // deletedItem === null if no item was found to be deleted.
+  if (!deletedItem) {
+    return res
+      .status(404)
+      .json({ status: 'error.', message: "Item doesn't exist." });
+  }
+
+  res
+    .status(200)
+    .json({ status: 'success', message: 'Item deleted', data: deletedItem });
+});
+
 // Server listening
 app.listen(port, () => {
   console.log(`===========================`);
