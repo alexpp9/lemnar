@@ -13,11 +13,11 @@ const ItemSchema = new Schema(
     type: {
       type: String,
       required: true,
-      enum: ['Chair', 'Table', 'Sofa', 'Bed', 'Cabinet', 'Other'],
+      enum: ['chair', 'table', 'sofa', 'bed', 'cabinet', 'other'],
     },
     material: {
       type: String,
-      required: true,
+      //   required: true,
       trim: true,
     },
     colour: {
@@ -27,7 +27,7 @@ const ItemSchema = new Schema(
     },
     weight: {
       type: Number,
-      required: true,
+      //   required: true,
       min: [0, 'Weight must be a positive number.'],
     },
     price: {
@@ -38,18 +38,18 @@ const ItemSchema = new Schema(
     room: {
       type: String,
       enum: [
-        'Living Room',
-        'Bedroom',
-        'Dining Room',
-        'Office',
-        'Outdoor',
-        'Other',
+        'living room',
+        'bedroom',
+        'dining room',
+        'office',
+        'outdoor',
+        'other',
       ],
-      required: true,
+      //   required: true,
     },
     image_url: {
       type: String,
-      // required: true,
+      required: true,
       trim: true,
     },
     description: {
@@ -59,7 +59,7 @@ const ItemSchema = new Schema(
     user_ref: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      // required: true,
+      required: true,
     },
   },
   { timestamps: true }

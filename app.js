@@ -37,11 +37,11 @@ app.use(
 );
 
 // Configure Cloudinary
-cloudinary.config({
-  cloud_name: cloudinaryName,
-  api_key: cloudinaryAPI,
-  api_secret: cloudinarySECRET,
-});
+// cloudinary.config({
+//   cloud_name: cloudinaryName,
+//   api_key: cloudinaryAPI,
+//   api_secret: cloudinarySECRET,
+// });
 
 // (async function () {
 //   const results = await cloudinary.uploader.upload('./test.jpg');
@@ -153,9 +153,50 @@ app.post('/logoutUser', (req, res) => {
 // ========================
 // Creating Furniture Items
 app.post('/api/item', async (req, res) => {
-  console.log(req.session.user); // Shows user if logged in.
+  const {
+    name,
+    type,
+    material,
+    colour,
+    weight,
+    price,
+    room,
+    image_url,
+    description,
+  } = req.body;
+  // Check permission
+  if (!req.session.user || !req.session.user.isAdmin) {
+    return res.status(401).json({
+      status: 'Error',
+      message: 'You are unauthorized to perform this action!',
+    });
+  }
+  // Check required fields
+  if (!name || !type || !colour || !price) {
+    return res.status(400).json({
+      status: 'Bad request',
+      message: 'There is missing information required for creating a new Item.',
+    });
+  }
+  // Creating the Item
+  const item = new Item({
+    name,
+    type,
+    material,
+    colour,
+    weight,
+    price,
+    room,
+    image_url,
+    description,
+    user_ref: req.session.user._id,
+  });
 
-  res.send('Hello from create!');
+  // Saving new Item to DB;
+  await item.save();
+
+  // Feedback
+  res.status(201).json({ status: 'success', message: 'Item created!' });
 });
 
 // Server listening
