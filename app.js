@@ -151,8 +151,23 @@ app.post('/logoutUser', (req, res) => {
 });
 
 // ========================
+
+// Getting all Items
+app.get('/api/items', async (req, res) => {
+  const items = await Item.find({});
+  if (!items) {
+    return res
+      .status(404)
+      .json({ status: 'error', message: 'No items were found!' });
+  }
+
+  res
+    .status(200)
+    .json({ status: 'success', message: 'Items found', data: items });
+});
+
 // Creating Furniture Items
-app.post('/api/item', async (req, res) => {
+app.post('/api/items', async (req, res) => {
   const {
     name,
     type,
@@ -200,7 +215,7 @@ app.post('/api/item', async (req, res) => {
 });
 
 // Delete Item
-app.post('/api/item/:id', async (req, res) => {
+app.post('/api/items/:id', async (req, res) => {
   const { id } = req.params;
   // Check permission
   if (!req.session.user || !req.session.user.isAdmin) {
