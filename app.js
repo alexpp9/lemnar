@@ -214,6 +214,41 @@ app.post('/api/items', async (req, res) => {
   res.status(201).json({ status: 'success', message: 'Item created!' });
 });
 
+// Updating Item
+app.put('/api/items/:id', async (req, res) => {
+  // Check permission
+  if (!req.session.user || !req.session.user.isAdmin) {
+    return res.status(401).json({
+      status: 'Error',
+      message: 'You are unauthorized to perform this action!',
+    });
+  }
+  // Get id
+  const { id } = req.params;
+
+  // Creating the Item
+  const item = await Item.findByIdAndUpdate(
+    id,
+    { ...req.body },
+    {
+      new: true,
+    }
+  );
+
+  if (!item) {
+    res
+      .status(400)
+      .json({ status: 'error', message: 'Bad request! No item to update!' });
+  }
+  // Save new item
+
+  await item.save();
+  // Feedback
+  res
+    .status(200)
+    .json({ status: 'success', message: 'Item update!', data: item });
+});
+
 // Delete Item
 app.post('/api/items/:id', async (req, res) => {
   const { id } = req.params;
