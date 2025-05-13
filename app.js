@@ -13,6 +13,9 @@ const cloudinary = require('cloudinary').v2;
 const User = require('./models/user');
 // Item
 const Item = require('./models/item');
+
+// Review
+const Review = require('./models/review');
 // DB
 const connectDB = require('./db');
 
