@@ -59,8 +59,14 @@ const ItemSchema = new Schema(
     user_ref: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      required: true,
+      // required: true,
     },
+    reviews_ref: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Review',
+      },
+    ],
   },
   { timestamps: true }
 );
