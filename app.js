@@ -276,6 +276,23 @@ app.post('/api/items/:id', async (req, res) => {
     .json({ status: 'success', message: 'Item deleted', data: deletedItem });
 });
 
+// =========
+// Review routes
+
+// Create review
+app.post('/api/item/:id/review', async (req, res) => {
+  const { body, rating } = req.body;
+  // check required fields
+  if (!rating) {
+    return res
+      .status(401)
+      .json({
+        status: 'error',
+        message: 'You need to at least leave a rating for posting a review.',
+      });
+  }
+});
+
 // Server listening
 app.listen(port, () => {
   console.log(`===========================`);
