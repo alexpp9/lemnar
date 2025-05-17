@@ -1,5 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
+const cors = require('cors');
 const session = require('express-session');
 const {
   port,
@@ -24,6 +25,9 @@ const app = express();
 
 // Allows Express to understand JSON
 app.use(express.json());
+
+// CORS permission
+app.use(cors());
 
 // Tells Express to use session
 app.use(
