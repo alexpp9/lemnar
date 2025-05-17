@@ -47,6 +47,9 @@ const RegisterForm = () => {
       .catch((error) => {
         console.error('Error:', error);
       });
+    setUsername('');
+    setEmail('');
+    setPassword('');
   };
 
   return (
