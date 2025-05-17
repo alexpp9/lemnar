@@ -169,6 +169,19 @@ app.get('/api/items', async (req, res) => {
     .json({ status: 'success', message: 'Items found', data: items });
 });
 
+// Details about an item;
+app.get('/api/items/:id', async (req, res) => {
+  // Find the item in DB based on id;
+  const item = await Item.findById(req.params.id).populate('reviews_ref');
+  if (!item) {
+    return res.status(404).json({ status: 'error', message: 'Item not found' });
+  }
+
+  res
+    .status(200)
+    .json({ status: 'success', message: 'Item found.', data: item });
+});
+
 // Creating Furniture Items
 app.post('/api/items', async (req, res) => {
   const {
