@@ -48,7 +48,7 @@ const ItemSchema = new Schema(
       //   required: true,
     },
     image_url: {
-      type: String,
+      type: [String],
       required: true,
       trim: true,
     },
