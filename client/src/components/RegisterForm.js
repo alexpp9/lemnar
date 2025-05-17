@@ -27,7 +27,7 @@ const RegisterForm = () => {
   };
 
   // Form Submission
-  const handleSubmit = (e) => {
+  const handleRegister = (e) => {
     e.preventDefault();
 
     createUser(username, email, password);
@@ -78,7 +78,7 @@ const RegisterForm = () => {
         value={password}
         onChange={handlePassword}
       />
-      <button onClick={handleSubmit}>Create account</button>
+      <button onClick={handleRegister}>Create account</button>
     </form>
   );
 };
