@@ -27,7 +27,13 @@ const app = express();
 app.use(express.json());
 
 // CORS permission
-app.use(cors());
+app.use(
+  cors({
+    origin: ['http://localhost:3001'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true,
+  })
+);
 
 // Tells Express to use session
 app.use(
@@ -38,7 +44,7 @@ app.use(
     // True, forces the session to be resave in the store, even if unmodified
     resave: false,
     cookie: {
-      maxAge: 60000 * 60, // 1h
+      maxAge: 60 * 60 * 24, // 24h
     },
   })
 );
