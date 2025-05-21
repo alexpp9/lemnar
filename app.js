@@ -151,7 +151,7 @@ app.post('/loginUser', async (req, res) => {
 
   // Attaching user to session;
   req.session.user = user;
-  res.status(201).json({
+  res.status(200).json({
     status: 'success',
     message: 'User logged in!',
   });

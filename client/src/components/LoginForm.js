@@ -39,7 +39,16 @@ const LoginForm = () => {
       });
     setUsername('');
     setPassword('');
+
+    // // Set locally
+    // localStorage.setItem('lemnar_username', username);
+    // localStorage.setItem('lemnar_loginStatus', true);
+    // localStorage.setItem('lemnar_loginTime', Date.now());
+    // // 24h = 86400000 mili
   };
+
+  // const normalForm =
+
   return (
     <div>
       <form>

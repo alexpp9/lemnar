@@ -22,6 +22,11 @@ const Logout = () => {
       .catch((error) => {
         console.error('Error:', error);
       });
+
+    // // Set locally
+    // localStorage.setItem('lemnar_username', '');
+    // localStorage.setItem('lemnar_loginStatus', false);
+    // localStorage.setItem('lemnar_loginTime', null);
   };
   return (
     <div>
