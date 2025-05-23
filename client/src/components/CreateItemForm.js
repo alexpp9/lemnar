@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const CreateItemForm = () => {
+  // Instantiate useNavigate
+  const navigate = useNavigate();
   // Axios instance
   const client = axios.create({
     baseURL: 'http://localhost:3000',
+    withCredentials: true,
   });
 
   //   Form fields state
@@ -71,6 +75,7 @@ const CreateItemForm = () => {
       };
 
       createItem(itemData);
+      navigate('/home');
     } catch (error) {
       console.error('Error during submit:', error);
     }

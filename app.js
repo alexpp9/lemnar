@@ -2,13 +2,7 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const cors = require('cors');
 const session = require('express-session');
-const {
-  port,
-  sessionSecret,
-  cloudinaryName,
-  cloudinaryAPI,
-  cloudinarySECRET,
-} = require('./config');
+const { port, sessionSecret } = require('./config');
 const cloudinary = require('cloudinary').v2;
 // User
 const User = require('./models/user');
@@ -29,7 +23,7 @@ app.use(express.json());
 // CORS permission
 app.use(
   cors({
-    origin: ['http://localhost:3001'],
+    origin: 'http://localhost:3001',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true,
   })
@@ -45,18 +39,11 @@ app.use(
     resave: false,
     cookie: {
       maxAge: 60 * 60 * 24, // 24h
+      secure: false,
+      sameSite: 'lax',
     },
   })
 );
-
-// Get / root
-app.get('/', (req, res) => {
-  if (!req.session.user) {
-    return res.status(401).send('Bad credentials!');
-  }
-
-  res.status(201).send(req.session.user);
-});
 
 // Create user
 app.post('/registerUser', async (req, res) => {
@@ -150,19 +137,6 @@ app.get('/api/items', async (req, res) => {
     .json({ status: 'success', message: 'Items found', data: items });
 });
 
-// Details about an item;
-app.get('/api/items/:id', async (req, res) => {
-  // Find the item in DB based on id;
-  const item = await Item.findById(req.params.id).populate('reviews_ref');
-  if (!item) {
-    return res.status(404).json({ status: 'error', message: 'Item not found' });
-  }
-
-  res
-    .status(200)
-    .json({ status: 'success', message: 'Item found.', data: item });
-});
-
 // Creating Furniture Items
 app.post('/api/items', async (req, res) => {
   const {
@@ -211,6 +185,19 @@ app.post('/api/items', async (req, res) => {
   res
     .status(201)
     .json({ status: 'success', message: 'Item created!', data: item });
+});
+
+// Details about an item;
+app.get('/api/items/:id', async (req, res) => {
+  // Find the item in DB based on id;
+  const item = await Item.findById(req.params.id).populate('reviews_ref');
+  if (!item) {
+    return res.status(404).json({ status: 'error', message: 'Item not found' });
+  }
+
+  res
+    .status(200)
+    .json({ status: 'success', message: 'Item found.', data: item });
 });
 
 // Updating Item
