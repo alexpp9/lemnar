@@ -2,7 +2,7 @@ import { useAuth } from '../hooks/AuthProvider';
 import Logout from '../components/Logout';
 import LoginForm from '../components/LoginForm';
 import CreateItemForm from './CreateItemForm';
-
+import Catalogue from './Catalogue';
 // imports
 import axios from 'axios';
 import { useState, useEffect } from 'react';
@@ -12,7 +12,7 @@ const Home = () => {
   const auth = useAuth(null);
 
   // State;
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]);
 
   // Calling data;
   useEffect(() => {
@@ -28,12 +28,16 @@ const Home = () => {
 
     fetchData();
   }, []);
+
   return (
     <div>
       <div>
         <h1>Welcome! {auth.user ? auth.user.username : ''}</h1>
         {!auth.user ? <LoginForm /> : <Logout />}
         {auth.user && auth.user.isAdmin ? <CreateItemForm /> : ''}
+      </div>
+      <div>
+        <Catalogue fetchedData={data} />
       </div>
     </div>
   );
