@@ -1,5 +1,5 @@
 import { useContext, createContext, useState } from 'react';
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const AuthContext = createContext();
@@ -7,7 +7,7 @@ const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem('site') || '');
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   // Create an Axios instance
   const client = axios.create({
@@ -22,11 +22,13 @@ const AuthProvider = ({ children }) => {
         password,
       });
 
-      setUser({ username });
+      setUser(response.data.data);
       setToken('session-active');
+
       localStorage.setItem('site', 'session-active');
 
-      // navigate("/dashboard");
+      navigate('/home');
+      return;
     } catch (err) {
       console.error('Login error:', err);
     }
@@ -38,8 +40,7 @@ const AuthProvider = ({ children }) => {
       setUser(null);
       setToken('');
       localStorage.removeItem('site');
-
-      // navigate("/login");
+      navigate('/login');
     } catch (err) {
       console.error('Logout error:', err);
     }

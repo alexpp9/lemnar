@@ -38,6 +38,7 @@ const ItemSchema = new Schema(
     room: {
       type: String,
       enum: [
+        'kitchen',
         'living room',
         'bedroom',
         'dining room',

@@ -1,54 +1,42 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-
+import { useState } from 'react';
+import { useAuth } from '../hooks/AuthProvider';
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 const LoginForm = () => {
-  // Axios instance
-  const client = axios.create({
-    baseURL: 'http://localhost:3000',
+  // Instantiate useNavigate
+  const navigate = useNavigate();
+  // auth From Context
+  const auth = useAuth();
+  // new state
+  const [input, setInput] = useState({
+    username: '',
+    password: '',
   });
-  // Declare state
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  // Handling the username change
-  const handleUsername = (e) => {
-    setUsername(e.target.value);
-  };
-  // Handling the password
-  const handlePassword = (e) => {
-    setPassword(e.target.value);
+
+  // Handle bulk states
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setInput((prevInput) => ({
+      ...prevInput,
+      [name]: value,
+    }));
   };
   // Form Submission
   const handleLogin = (e) => {
     e.preventDefault();
 
-    loginUser(username, password);
-  };
-
-  // API POST CALL
-  const loginUser = (username, password) => {
-    client
-      .post('/loginUser', {
-        username: username,
-        password: password,
-      })
-      .then((response) => {
-        console.log('User Logged in.', response.data);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
+    if (input.username !== '' && input.password !== '') {
+      auth.loginAction(input);
+      // Clear the form inputs after login
+      setInput({
+        username: '',
+        password: '',
       });
-    setUsername('');
-    setPassword('');
-
-    // // Set locally
-    // localStorage.setItem('lemnar_username', username);
-    // localStorage.setItem('lemnar_loginStatus', true);
-    // localStorage.setItem('lemnar_loginTime', Date.now());
-    // // 24h = 86400000 mili
+      navigate('/home');
+      return;
+    }
+    alert('please provide a valid input');
   };
-
-  // const normalForm =
-
   return (
     <div>
       <form>
@@ -57,19 +45,22 @@ const LoginForm = () => {
           type="text"
           id="username"
           name="username"
-          value={username}
-          onChange={handleUsername}
+          value={input.username}
+          onChange={handleChange}
         />
         <label>Please enter your password: </label>
         <input
           type="password"
           id="password"
           name="password"
-          value={password}
-          onChange={handlePassword}
+          value={input.password}
+          onChange={handleChange}
         />
         <button onClick={handleLogin}>Login</button>
       </form>
+      <p>
+        Don’t have an account? <Link to="/register">Create one</Link>
+      </p>
     </div>
   );
 };

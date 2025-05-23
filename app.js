@@ -49,36 +49,6 @@ app.use(
   })
 );
 
-// Configure Cloudinary
-// cloudinary.config({
-//   cloud_name: cloudinaryName,
-//   api_key: cloudinaryAPI,
-//   api_secret: cloudinarySECRET,
-// });
-
-// (async function () {
-//   const results = await cloudinary.uploader.upload('./test.jpg');
-//   console.log(results);
-//   // Dynamic URL
-//   const url = cloudinary.url(results.public_id, {
-//     transformation: [
-//       {
-//         quality: 'auto',
-//       },
-//       {
-//         fetch_format: 'auto',
-//       },
-//       {
-//         width: 1200,
-//         height: 1200,
-//         crop: 'fill',
-//         gravity: 'auto',
-//       },
-//     ],
-//   });
-//   console.log(url);
-// })();
-
 // Get / root
 app.get('/', (req, res) => {
   if (!req.session.user) {
@@ -154,6 +124,7 @@ app.post('/loginUser', async (req, res) => {
   res.status(200).json({
     status: 'success',
     message: 'User logged in!',
+    data: user,
   });
 });
 
@@ -237,7 +208,9 @@ app.post('/api/items', async (req, res) => {
   await item.save();
 
   // Feedback
-  res.status(201).json({ status: 'success', message: 'Item created!' });
+  res
+    .status(201)
+    .json({ status: 'success', message: 'Item created!', data: item });
 });
 
 // Updating Item
