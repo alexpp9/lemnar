@@ -87,7 +87,9 @@ const ItemDetails = () => {
         </div>
         {auth.user && auth.user.isAdmin ? (
           <div className="p-3">
-            <button className="btn btn-info m-2">Edit info</button>
+            <Link to="/update" state={{ item }} className="btn btn-info m-2">
+              Edit info
+            </Link>
             <button onClick={deleteItem} className="btn btn-danger">
               Delete item
             </button>
