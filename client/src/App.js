@@ -17,10 +17,6 @@ function App() {
       <Router>
         <AuthProvider>
           <Routes>
-            {/* <RegisterForm />
-            <LoginForm />
-            <Logout />
-            <CreateItemForm /> */}
             {/* Route to login */}
             <Route path="/" element={<IndexPage />} />
             <Route path="/login" element={<LoginForm />} />
