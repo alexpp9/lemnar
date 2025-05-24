@@ -156,6 +156,21 @@ app.post('/logoutUser', (req, res) => {
   res.status(201).send('Logged you out!');
 });
 
+// Checks authentification (used for persistance of user)
+app.get('/check-auth', (req, res) => {
+  if (!req.session.user) {
+    return res
+      .status(403)
+      .json({ status: 'error', message: 'No user logged in!' });
+  }
+
+  res.status(200).json({
+    status: 'OK!',
+    message: 'User logged in!',
+    data: req.session.user,
+  });
+});
+
 // ========================
 
 // Getting all Items

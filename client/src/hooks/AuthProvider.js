@@ -1,4 +1,4 @@
-import { useContext, createContext, useState } from 'react';
+import { useContext, createContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
@@ -14,7 +14,33 @@ const AuthProvider = ({ children }) => {
     baseURL: 'http://localhost:3000',
     withCredentials: true,
   });
+  // Check if user is already logged in on mount
+  useEffect(() => {
+    const checkSession = async () => {
+      if (token === 'session-active') {
+        try {
+          // You must implement this route in your backend
+          const res = await client.get('/check-auth');
+          if (res.data?.data) {
+            setUser(res.data.data);
+          } else {
+            // Session not valid
+            setUser(null);
+            setToken('');
+            localStorage.removeItem('site');
+          }
+        } catch (err) {
+          console.error('Session check failed:', err);
+          setUser(null);
+          setToken('');
+          localStorage.removeItem('site');
+        }
+      }
+    };
+    checkSession();
+  }, [token, client]);
 
+  // Login function
   const loginAction = async ({ username, password }) => {
     try {
       const response = await client.post('/loginUser', {
