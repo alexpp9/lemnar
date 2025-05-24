@@ -1,6 +1,5 @@
 import { useContext, createContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import axios from 'axios';
 
 const AuthContext = createContext();
@@ -22,14 +21,12 @@ const AuthProvider = ({ children }) => {
         username,
         password,
       });
-
       setUser(response.data.data);
       setToken('session-active');
 
       localStorage.setItem('site', 'session-active');
 
       navigate('/home');
-      return;
     } catch (err) {
       console.error('Login error:', err);
     }
@@ -41,7 +38,7 @@ const AuthProvider = ({ children }) => {
       setUser(null);
       setToken('');
       localStorage.removeItem('site');
-      navigate('/login');
+      navigate('/home');
     } catch (err) {
       console.error('Logout error:', err);
     }

@@ -3,7 +3,8 @@ const bcrypt = require('bcrypt');
 const cors = require('cors');
 const session = require('express-session');
 const { port, sessionSecret } = require('./config');
-const cloudinary = require('cloudinary').v2;
+
+const cloudinary = require('./cloudinary');
 // User
 const User = require('./models/user');
 // Item
@@ -44,6 +45,40 @@ app.use(
     },
   })
 );
+
+// Extract the ID from URL
+function urlToPublicId(url) {
+  // Split URL at '/upload/' — the public_id and version follow this
+  const parts = url.split('/upload/');
+  if (parts.length < 2) return null; // invalid URL format
+
+  // Remove version folder, e.g. 'v1234567890/'
+  let publicIdWithExt = parts[1].replace(/^v\d+\//, '');
+
+  // Remove file extension (jpg, png, etc.)
+  const lastDot = publicIdWithExt.lastIndexOf('.');
+  if (lastDot === -1) return publicIdWithExt; // no extension found
+
+  return publicIdWithExt.substring(0, lastDot);
+}
+// Function to delete images from Cloudinary along with deleting the Item from the DB.
+const deleteImagesByUrl = async (imageUrls) => {
+  try {
+    const deletePromises = imageUrls.map((url) => {
+      const publicId = urlToPublicId(url);
+      if (!publicId) {
+        console.warn(`Skipping invalid URL: ${url}`);
+        return Promise.resolve(null);
+      }
+      return cloudinary.uploader.destroy(publicId);
+    });
+
+    const results = await Promise.all(deletePromises);
+    console.log('Delete results:', results);
+  } catch (error) {
+    console.error('Error deleting images:', error);
+  }
+};
 
 // Create user
 app.post('/registerUser', async (req, res) => {
@@ -236,7 +271,7 @@ app.put('/api/items/:id', async (req, res) => {
 });
 
 // Delete Item
-app.post('/api/items/:id', async (req, res) => {
+app.delete('/api/items/:id', async (req, res) => {
   const { id } = req.params;
   // Check permission
   if (!req.session.user || !req.session.user.isAdmin) {
@@ -245,6 +280,7 @@ app.post('/api/items/:id', async (req, res) => {
       message: 'You are unauthorized to perform this action!',
     });
   }
+
   // Perform operation
   const deletedItem = await Item.findByIdAndDelete(id);
   // deletedItem === null if no item was found to be deleted.
@@ -253,6 +289,9 @@ app.post('/api/items/:id', async (req, res) => {
       .status(404)
       .json({ status: 'error.', message: "Item doesn't exist." });
   }
+
+  // Attempt to delete items from Cloudinary along with the DB item;
+  deleteImagesByUrl(deletedItem.image_url);
 
   res
     .status(200)

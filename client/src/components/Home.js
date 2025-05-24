@@ -1,15 +1,16 @@
 import { useAuth } from '../hooks/AuthProvider';
-import Logout from '../components/Logout';
-import LoginForm from '../components/LoginForm';
+// import Logout from '../components/Logout';
+// import LoginForm from '../components/LoginForm';
 import CreateItemForm from './CreateItemForm';
 import Catalogue from './Catalogue';
+import { Link } from 'react-router-dom';
 // imports
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 
 const Home = () => {
   // Hook instance;
-  const auth = useAuth(null);
+  const auth = useAuth();
 
   // State;
   const [data, setData] = useState([]);
@@ -33,7 +34,15 @@ const Home = () => {
     <div>
       <div>
         <h1>Welcome! {auth.user ? auth.user.username : ''}</h1>
-        {!auth.user ? <LoginForm /> : <Logout />}
+        {!auth.user ? (
+          <Link className="btn btn-primary" to="/login">
+            Login
+          </Link>
+        ) : (
+          <button className="btn btn-danger" onClick={auth.logOut}>
+            Logout
+          </button>
+        )}
         {auth.user && auth.user.isAdmin ? <CreateItemForm /> : ''}
       </div>
       <div>

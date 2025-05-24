@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks/AuthProvider';
 import axios from 'axios';
+
 const ItemDetails = () => {
   // Initialize navigate
   const navigate = useNavigate();
@@ -25,6 +26,7 @@ const ItemDetails = () => {
     );
   }
 
+  //   Delete images from Cloudinary as well.
   //   Function call to delete Item.
   const deleteItem = async () => {
     try {

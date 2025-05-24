@@ -75,7 +75,8 @@ const CreateItemForm = () => {
       };
 
       createItem(itemData);
-      navigate('/home');
+
+      navigate(`/home`);
     } catch (error) {
       console.error('Error during submit:', error);
     }
@@ -107,67 +108,149 @@ const CreateItemForm = () => {
   };
 
   return (
-    <form>
-      {/* 1 */}
-      <label htmlFor="name">Name</label>
-      <input name="name" value={formData.name} onChange={handleChange} />
-      {/* 2 */}
-      <label htmlFor="type">Type</label>
-      <input name="type" value={formData.type} onChange={handleChange} />
-      {/* 3 */}
-      <label htmlFor="material">Material</label>
-      <input
-        name="material"
-        value={formData.material}
-        onChange={handleChange}
-      />
-      {/* 4 */}
-      <label htmlFor="colour">Colour</label>
-      <input name="colour" value={formData.colour} onChange={handleChange} />
-      {/* 5 */}
-      <label htmlFor="weight">Weight</label>
-      <input
-        type="number"
-        name="weight"
-        value={formData.weight}
-        onChange={handleChange}
-      />
-      {/* 6 */}
-      <label htmlFor="price">Price</label>
-      <input
-        type="number"
-        name="price"
-        value={formData.price}
-        onChange={handleChange}
-      />
-      {/* 7 */}
-      <label htmlFor="room">Room</label>
-      <input name="room" value={formData.room} onChange={handleChange} />
-      {/* 8 - special case */}
-      <label htmlFor="image_url">Image URL</label>
-      <input
-        type="file"
-        name="image_url"
-        multiple
-        accept="image/*"
-        onChange={(e) => {
-          setFormData((prev) => ({
-            ...prev,
-            image_url: Array.from(e.target.files),
-          }));
-        }}
-      />
-      {/* 9 */}
-      <label htmlFor="description">Description</label>
-      <textarea
-        name="description"
-        value={formData.description}
-        onChange={handleChange}
-      />
-      <button type="submit" onClick={handleSubmit}>
-        Create Item
-      </button>
-    </form>
+    <div className="row justify-content-center">
+      <div className="col-md-8">
+        <form className="p-4 border rounded bg-light w-100">
+          {/* 1 */}
+          <div className="mb-3 w-100">
+            <label htmlFor="name" className="form-label">
+              Name
+            </label>
+            <input
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              className="form-control"
+            />
+          </div>
+
+          {/* 2 */}
+          <div className="mb-3 w-100">
+            <label htmlFor="type" className="form-label">
+              Type
+            </label>
+            <input
+              name="type"
+              value={formData.type}
+              onChange={handleChange}
+              className="form-control"
+            />
+          </div>
+
+          {/* 3 */}
+          <div className="mb-3 w-100">
+            <label htmlFor="material" className="form-label">
+              Material
+            </label>
+            <input
+              name="material"
+              value={formData.material}
+              onChange={handleChange}
+              className="form-control"
+            />
+          </div>
+
+          {/* 4 */}
+          <div className="mb-3 w-100">
+            <label htmlFor="colour" className="form-label">
+              Colour
+            </label>
+            <input
+              name="colour"
+              value={formData.colour}
+              onChange={handleChange}
+              className="form-control"
+            />
+          </div>
+
+          {/* 5 */}
+          <div className="mb-3 w-100">
+            <label htmlFor="weight" className="form-label">
+              Weight
+            </label>
+            <input
+              type="number"
+              name="weight"
+              value={formData.weight}
+              onChange={handleChange}
+              className="form-control"
+            />
+          </div>
+
+          {/* 6 */}
+          <div className="mb-3 w-100">
+            <label htmlFor="price" className="form-label">
+              Price
+            </label>
+            <input
+              type="number"
+              name="price"
+              value={formData.price}
+              onChange={handleChange}
+              className="form-control"
+            />
+          </div>
+
+          {/* 7 */}
+          <div className="mb-3 w-100">
+            <label htmlFor="room" className="form-label">
+              Room
+            </label>
+            <input
+              name="room"
+              value={formData.room}
+              onChange={handleChange}
+              className="form-control"
+            />
+          </div>
+
+          {/* 8 */}
+          <div className="mb-3 w-100">
+            <label htmlFor="image_url" className="form-label">
+              Image URL
+            </label>
+            <input
+              type="file"
+              name="image_url"
+              multiple
+              accept="image/*"
+              onChange={(e) => {
+                setFormData((prev) => ({
+                  ...prev,
+                  image_url: Array.from(e.target.files),
+                }));
+              }}
+              className="form-control"
+            />
+          </div>
+
+          {/* 9 */}
+          <div className="mb-3 w-100">
+            <label htmlFor="description" className="form-label">
+              Description
+            </label>
+            <textarea
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              className="form-control"
+              rows="4"
+            />
+          </div>
+
+          {/* Submit Button */}
+          <div className="w-100 d-grid">
+            <button
+              type="submit"
+              onClick={handleSubmit}
+              className="btn btn-primary"
+            >
+              Create Item
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 };
 
