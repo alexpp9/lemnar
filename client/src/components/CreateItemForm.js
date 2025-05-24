@@ -76,7 +76,7 @@ const CreateItemForm = () => {
 
       createItem(itemData);
 
-      navigate(`/home`);
+      navigate(`/`);
     } catch (error) {
       console.error('Error during submit:', error);
     }
