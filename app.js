@@ -33,44 +33,8 @@ app.use(
   })
 );
 
-// Create user
-app.post('/registerUser', async (req, res) => {});
-
-// Login user (without session)
-app.post('/loginUser', async (req, res) => {});
-
-app.post('/logoutUser', (req, res) => {});
-
-// Checks authentification (used for persistance of user)
-app.get('/check-auth');
-
-// ========================
-
-// Getting all Items
-app.get('/api/items', async (req, res) => {});
-
-// Creating Furniture Items
-app.post('/api/items', async (req, res) => {});
-
-// Details about an item;
-app.get('/api/items/:id', async (req, res) => {});
-
-// Updating Item
-app.put('/api/items/:id', async (req, res) => {});
-
-// Delete Item
-app.delete('/api/items/:id', async (req, res) => {});
-
-// =========
-// Review routes
-
-// Create review
-app.post('/api/item/:id/review', async (req, res) => {});
-
-// Editting a revie -> maybe later
-
-// Delete review
-app.delete('/api/item/:id/review/:reviewID', async (req, res) => {});
+// Routes
+// ======
 
 // Server listening
 app.listen(port, () => {
