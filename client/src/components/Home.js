@@ -1,6 +1,5 @@
 import { useAuth } from '../hooks/AuthProvider';
-// import Logout from '../components/Logout';
-// import LoginForm from '../components/LoginForm';
+import Navbar from './Navbar';
 import CreateItemForm from './CreateItemForm';
 import Catalogue from './Catalogue';
 import { Link } from 'react-router-dom';
@@ -32,6 +31,7 @@ const Home = () => {
 
   return (
     <div>
+      <Navbar />
       <div>
         <h1>Welcome! {auth.user ? auth.user.username : ''}</h1>
         {!auth.user ? (
