@@ -1,26 +1,13 @@
 const express = require('express');
-const bcrypt = require('bcrypt');
 const cors = require('cors');
 const session = require('express-session');
 const { port, sessionSecret } = require('./config');
-
-const cloudinary = require('./cloudinary');
-// User
-const User = require('./models/user');
-// Item
-const Item = require('./models/item');
-
-// Review
-const Review = require('./models/review');
 // DB
 const connectDB = require('./db');
-
 // Execute express;
 const app = express();
-
 // Allows Express to understand JSON
 app.use(express.json());
-
 // CORS permission
 app.use(
   cors({
@@ -29,7 +16,6 @@ app.use(
     credentials: true,
   })
 );
-
 // Tells Express to use session
 app.use(
   session({
@@ -39,355 +25,52 @@ app.use(
     // True, forces the session to be resave in the store, even if unmodified
     resave: false,
     cookie: {
-      maxAge: 60 * 60 * 24, // 24h
+      // 24h
+      maxAge: 60 * 60 * 24,
       secure: false,
       sameSite: 'lax',
     },
   })
 );
 
-// Extract the ID from URL
-function urlToPublicId(url) {
-  // Split URL at '/upload/' — the public_id and version follow this
-  const parts = url.split('/upload/');
-  if (parts.length < 2) return null; // invalid URL format
-
-  // Remove version folder, e.g. 'v1234567890/'
-  let publicIdWithExt = parts[1].replace(/^v\d+\//, '');
-
-  // Remove file extension (jpg, png, etc.)
-  const lastDot = publicIdWithExt.lastIndexOf('.');
-  if (lastDot === -1) return publicIdWithExt; // no extension found
-
-  return publicIdWithExt.substring(0, lastDot);
-}
-// Function to delete images from Cloudinary along with deleting the Item from the DB.
-const deleteImagesByUrl = async (imageUrls) => {
-  try {
-    const deletePromises = imageUrls.map((url) => {
-      const publicId = urlToPublicId(url);
-      if (!publicId) {
-        console.warn(`Skipping invalid URL: ${url}`);
-        return Promise.resolve(null);
-      }
-      return cloudinary.uploader.destroy(publicId);
-    });
-
-    const results = await Promise.all(deletePromises);
-    console.log('Delete results:', results);
-  } catch (error) {
-    console.error('Error deleting images:', error);
-  }
-};
-
 // Create user
-app.post('/registerUser', async (req, res) => {
-  // Get elements from req.body;
-  const { username, email, password } = req.body;
-
-  // Check important elements
-  if (!username || !email || !password) {
-    return res.status(400).json({
-      status: 'error',
-      message: 'Some information is missing!',
-    });
-  }
-
-  // Check to see if user already exists (via unique attribute)
-  const existingUser = await User.findOne({ email });
-  if (existingUser) {
-    return res
-      .status(400)
-      .json({ status: 'error', message: 'User already exists' });
-  }
-
-  // Encrypt passoword
-  const saltRounds = 10;
-  const hashedPassword = await bcrypt.hash(password, saltRounds);
-  const user = new User({
-    username,
-    email,
-    password: hashedPassword,
-  });
-
-  await user.save();
-
-  // If user is successfully registered; add user id to <session>
-  req.session.user = user;
-  res.status(201).json({
-    status: 'success',
-    message: 'User created!',
-  });
-});
+app.post('/registerUser', async (req, res) => {});
 
 // Login user (without session)
-app.post('/loginUser', async (req, res) => {
-  const { username, password } = req.body;
-  if (!username || !password) {
-    return res.status(400).json({
-      status: 'error',
-      message: 'Some information is missing!',
-    });
-  }
+app.post('/loginUser', async (req, res) => {});
 
-  // find user via username
-  const user = await User.findOne({ username });
-  // Compare passwords
-  const comparisonResult = await bcrypt.compare(password, user.password);
-  if (!user || !comparisonResult) {
-    return res.status(401).json({
-      status: 'error',
-      message: 'Sorry! Bad credentials.',
-    });
-  }
-
-  // Attaching user to session;
-  req.session.user = user;
-  res.status(200).json({
-    status: 'success',
-    message: 'User logged in!',
-    data: user,
-  });
-});
-
-app.post('/logoutUser', (req, res) => {
-  // Removes the user from the sesson, thus logging user out
-  req.session.user = null;
-  res.status(201).send('Logged you out!');
-});
+app.post('/logoutUser', (req, res) => {});
 
 // Checks authentification (used for persistance of user)
-app.get('/check-auth', (req, res) => {
-  if (!req.session.user) {
-    return res
-      .status(403)
-      .json({ status: 'error', message: 'No user logged in!' });
-  }
-
-  res.status(200).json({
-    status: 'OK!',
-    message: 'User logged in!',
-    data: req.session.user,
-  });
-});
+app.get('/check-auth');
 
 // ========================
 
 // Getting all Items
-app.get('/api/items', async (req, res) => {
-  const items = await Item.find({});
-  if (!items) {
-    return res
-      .status(404)
-      .json({ status: 'error', message: 'No items were found!' });
-  }
-
-  res
-    .status(200)
-    .json({ status: 'success', message: 'Items found', data: items });
-});
+app.get('/api/items', async (req, res) => {});
 
 // Creating Furniture Items
-app.post('/api/items', async (req, res) => {
-  const {
-    name,
-    type,
-    material,
-    colour,
-    weight,
-    price,
-    room,
-    image_url,
-    description,
-  } = req.body;
-  // Check permission
-  if (!req.session.user || !req.session.user.isAdmin) {
-    return res.status(401).json({
-      status: 'Error',
-      message: 'You are unauthorized to perform this action!',
-    });
-  }
-  // Check required fields
-  if (!name || !type || !colour || !price) {
-    return res.status(400).json({
-      status: 'Bad request',
-      message: 'There is missing information required for creating a new Item.',
-    });
-  }
-  // Creating the Item
-  const item = new Item({
-    name,
-    type,
-    material,
-    colour,
-    weight,
-    price,
-    room,
-    image_url,
-    description,
-    user_ref: req.session.user._id,
-  });
-
-  // Saving new Item to DB;
-  await item.save();
-
-  // Feedback
-  res
-    .status(201)
-    .json({ status: 'success', message: 'Item created!', data: item });
-});
+app.post('/api/items', async (req, res) => {});
 
 // Details about an item;
-app.get('/api/items/:id', async (req, res) => {
-  // Find the item in DB based on id;
-  const item = await Item.findById(req.params.id).populate('reviews_ref');
-  if (!item) {
-    return res.status(404).json({ status: 'error', message: 'Item not found' });
-  }
-
-  res
-    .status(200)
-    .json({ status: 'success', message: 'Item found.', data: item });
-});
+app.get('/api/items/:id', async (req, res) => {});
 
 // Updating Item
-app.put('/api/items/:id', async (req, res) => {
-  // Check permission
-  if (!req.session.user || !req.session.user.isAdmin) {
-    return res.status(401).json({
-      status: 'Error',
-      message: 'You are unauthorized to perform this action!',
-    });
-  }
-  // Get id
-  const { id } = req.params;
-
-  // Creating the Item
-  const item = await Item.findByIdAndUpdate(
-    id,
-    { ...req.body },
-    {
-      new: true,
-    }
-  );
-
-  if (!item) {
-    res
-      .status(400)
-      .json({ status: 'error', message: 'Bad request! No item to update!' });
-  }
-  // Save new item
-
-  await item.save();
-  // Feedback
-  res
-    .status(200)
-    .json({ status: 'success', message: 'Item update!', data: item });
-});
+app.put('/api/items/:id', async (req, res) => {});
 
 // Delete Item
-app.delete('/api/items/:id', async (req, res) => {
-  const { id } = req.params;
-  // Check permission
-  if (!req.session.user || !req.session.user.isAdmin) {
-    return res.status(401).json({
-      status: 'Error',
-      message: 'You are unauthorized to perform this action!',
-    });
-  }
-
-  // Perform operation
-  const deletedItem = await Item.findByIdAndDelete(id);
-  // deletedItem === null if no item was found to be deleted.
-  if (!deletedItem) {
-    return res
-      .status(404)
-      .json({ status: 'error.', message: "Item doesn't exist." });
-  }
-
-  // Attempt to delete items from Cloudinary along with the DB item;
-  deleteImagesByUrl(deletedItem.image_url);
-
-  res
-    .status(200)
-    .json({ status: 'success', message: 'Item deleted', data: deletedItem });
-});
+app.delete('/api/items/:id', async (req, res) => {});
 
 // =========
 // Review routes
 
 // Create review
-app.post('/api/item/:id/review', async (req, res) => {
-  const { body, rating } = req.body;
-  // find furniture item by id;
-  const item = await Item.findById(req.params.id);
-  if (!item) {
-    return res.status(404).json({
-      status: 'error',
-      message: 'There is no Item onto which one can post a review.',
-    });
-  }
-  // Check user loggin.
-  if (!req.session.user) {
-    return res.status(403).json({
-      status: 'error',
-      message: 'Forbidden! One cannot post a review without being logged in.',
-    });
-  }
-  // check required fields
-  if (!rating) {
-    return res.status(401).json({
-      status: 'error',
-      message: 'You need to at least leave a rating for posting a review.',
-    });
-  }
-  // Create new review
-  const review = new Review({ body, rating });
-  review.author = req.session.user._id;
-  item.reviews_ref.push(review);
-
-  // Save item to DB
-  await review.save();
-  // Resave Item with added review
-  await item.save();
-
-  res.status(201).json({
-    status: 'success',
-    message: 'Review added to Furniture item.',
-    data: review,
-  });
-});
+app.post('/api/item/:id/review', async (req, res) => {});
 
 // Editting a revie -> maybe later
 
 // Delete review
-app.post('/api/item/:id/review/:reviewID', async (req, res) => {
-  // find furniture item by id;
-  const reviewID = req.params.reviewID;
-  const review = await Review.findById(reviewID);
-
-  // Check user loggin.
-  if (!req.session.user || req.session.user._id !== review.author.toString()) {
-    return res.status(403).json({
-      status: 'error',
-      message: 'Forbidden! One cannot delete a review without being logged in.',
-    });
-  }
-  // Delete
-  // $pull finds the item fitting the criteria and pulls it from the array (deletes it)
-  // findByIdAndUpdate updates the Item.reviews_ref without the said review
-  // findByIdAndDelete, deletes the review from the DB.
-  const item = await Item.findByIdAndUpdate(req.params.id, {
-    $pull: { reviews_ref: reviewID },
-  });
-  const deletedReview = await Review.findByIdAndDelete(reviewID);
-
-  res.status(200).json({
-    status: 'success',
-    message: 'Review deleted.',
-    data: deletedReview,
-  });
-});
+app.delete('/api/item/:id/review/:reviewID', async (req, res) => {});
 
 // Server listening
 app.listen(port, () => {
