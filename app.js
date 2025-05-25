@@ -1,5 +1,4 @@
 const express = require('express');
-const cors = require('cors');
 const session = require('express-session');
 const { port, sessionSecret } = require('./config');
 // DB
@@ -14,14 +13,7 @@ const reviewRoutes = require('./routes/reviews');
 const userRoutes = require('./routes/users');
 // Allows Express to understand JSON
 app.use(express.json());
-// CORS permission
-app.use(
-  cors({
-    origin: 'http://localhost:3001',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true,
-  })
-);
+
 // Tells Express to use session
 app.use(
   session({

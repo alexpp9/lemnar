@@ -1,6 +1,20 @@
 const Item = require('../models/item');
 const { deleteImagesByUrl } = require('../middleware');
+// Require express
+const express = require('express');
+// Execute express;
+const app = express();
+const cors = require('cors');
 // Controllers for Item model;
+
+// CORS permission
+app.use(
+  cors({
+    origin: 'http://localhost:3001',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true,
+  })
+);
 
 // Get items;
 module.exports.getItems = async (req, res) => {
