@@ -41,16 +41,16 @@ const ItemDetails = () => {
   return (
     <div className="container mt-5">
       {/* Title */}
-      <h2 className="mb-4 text-center">{item.name}</h2>
+      <h2 className="mb-4 text-center fw-bold">{item.name}</h2>
 
       {/* Item Images */}
-      <div className="row mb-4">
+      <div className="row mb-4 g-3">
         {item.image_url.map((url, idx) => (
-          <div key={idx} className="col-6 col-md-4 mb-3">
+          <div key={idx} className="col-6 col-md-4">
             <img
               src={url}
               alt={`${item.name} ${idx + 1}`}
-              className="img-fluid img-thumbnail"
+              className="img-fluid rounded shadow-sm"
               style={{ objectFit: 'cover', height: '350px', width: '100%' }}
             />
           </div>
@@ -58,9 +58,9 @@ const ItemDetails = () => {
       </div>
 
       {/* Item Info Card */}
-      <div className="card shadow">
+      <div className="card shadow-lg mb-3">
         <div className="card-body">
-          <h5 className="card-title">Details</h5>
+          <h5 className="card-title border-bottom pb-2 mb-3">Details</h5>
           <ul className="list-group list-group-flush">
             <li className="list-group-item">
               <strong>Description:</strong> {item.description}
@@ -81,13 +81,15 @@ const ItemDetails = () => {
               <strong>Weight:</strong> {item.weight} kg
             </li>
             <li className="list-group-item">
-              <strong>Price:</strong> ${item.price}
+              <strong>Price:</strong>{' '}
+              <span className="text-success fw-semibold">${item.price}</span>
             </li>
           </ul>
         </div>
+
         {auth.user && auth.user.isAdmin ? (
-          <div className="p-3">
-            <Link to="/update" state={{ item }} className="btn btn-info m-2">
+          <div className="p-3 d-flex flex-wrap gap-2 justify-content-start border-top">
+            <Link to="/update" state={{ item }} className="btn btn-info">
               Edit info
             </Link>
             <button onClick={deleteItem} className="btn btn-danger">
@@ -97,9 +99,12 @@ const ItemDetails = () => {
         ) : (
           ' '
         )}
-        <Link className="btn btn-success" to="/home">
-          Go back
-        </Link>
+
+        <div className="p-3 border-top">
+          <Link className="btn btn-success w-100" to="/home">
+            Go back
+          </Link>
+        </div>
       </div>
     </div>
   );

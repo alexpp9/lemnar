@@ -1,16 +1,8 @@
-// import { useAuth } from '../hooks/AuthProvider';
-import Navbar from './Navbar';
-// import CreateItemForm from './CreateItemForm';
 import Catalogue from './Catalogue';
-// import { Link } from 'react-router-dom';
-// imports
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 
 const Home = () => {
-  // Hook instance;
-  // const auth = useAuth();
-
   // State;
   const [data, setData] = useState([]);
 
@@ -30,16 +22,13 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
-      <Navbar />
-      <div className="container">
-        <h1 className="text-center mt-5">
-          Welcome to our furniture webiste. Please browse our collections below
-        </h1>
+    <div className="container">
+      <h1 className="text-center mt-5">
+        Welcome to our furniture webiste. Please browse our collections below
+      </h1>
 
-        <div>
-          <Catalogue fetchedData={data} />
-        </div>
+      <div>
+        <Catalogue fetchedData={data} />
       </div>
     </div>
   );
