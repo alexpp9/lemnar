@@ -1,16 +1,29 @@
 const express = require('express');
 const session = require('express-session');
 const { port, sessionSecret } = require('./config');
-// DB
-const connectDB = require('./db');
-// Execute express;
-const app = express();
+const cors = require('cors');
 // items
 const itemRoutes = require('./routes/items');
 // reviews
 const reviewRoutes = require('./routes/reviews');
 // users
 const userRoutes = require('./routes/users');
+// DB
+const connectDB = require('./db');
+// Execute express;
+const app = express();
+
+// Controllers for Item model;
+
+// CORS permission
+app.use(
+  cors({
+    origin: 'http://localhost:3001',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true,
+  })
+);
+
 // Allows Express to understand JSON
 app.use(express.json());
 
