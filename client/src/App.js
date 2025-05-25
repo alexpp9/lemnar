@@ -24,10 +24,10 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/register" element={<RegisterForm />} />
             <Route path="/details" element={<ItemDetails />} />
-            <Route path="/update" element={<UpdateItemForm />} />
             {/* Goes through the PrivateRoute, if it passes, takes me home. Otherwise, PrivateRoute login redirect to /login */}
             <Route element={<PrivateRoute />}>
               <Route path="/addItem" element={<CreateItemForm />} />
+              <Route path="/update" element={<UpdateItemForm />} />
             </Route>
           </Routes>
         </AuthProvider>

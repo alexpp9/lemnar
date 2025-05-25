@@ -1,4 +1,4 @@
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAuth } from '../hooks/AuthProvider';
 const Navbar = () => {
   // Hook instance;
@@ -12,7 +12,7 @@ const Navbar = () => {
               src="/logo.png"
               alt="Lemnar company logo"
               className="rounded"
-              style={{ height: '48px', width: '48px', objectFit: 'cover' }}
+              style={{ height: '58px', width: '58px', objectFit: 'cover' }}
             />
           </a>
 
@@ -47,6 +47,14 @@ const Navbar = () => {
                 <button className="btn btn-danger" onClick={auth.logOut}>
                   Logout
                 </button>
+              )}
+
+              {auth.user && auth.user.isAdmin ? (
+                <Link className="btn btn-primary" to="/addItem">
+                  Add Item
+                </Link>
+              ) : (
+                ''
               )}
             </div>
           </div>
