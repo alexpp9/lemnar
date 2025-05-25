@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useAuth } from '../hooks/AuthProvider';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import Navbar from './Navbar';
 const LoginForm = () => {
   // Instantiate useNavigate
   const navigate = useNavigate();
@@ -38,30 +39,58 @@ const LoginForm = () => {
     alert('please provide a valid input');
   };
   return (
-    <div>
-      <form>
-        <label>Please enter your username: </label>
-        <input
-          type="text"
-          id="username"
-          name="username"
-          value={input.username}
-          onChange={handleChange}
-        />
-        <label>Please enter your password: </label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          value={input.password}
-          onChange={handleChange}
-        />
-        <button onClick={handleLogin}>Login</button>
-      </form>
-      <p>
-        Don’t have an account? <Link to="/register">Create one</Link>
-      </p>
-    </div>
+    <>
+      <Navbar />
+      <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
+        <div className="container" style={{ maxWidth: '450px' }}>
+          <form className="p-4 border rounded shadow-sm bg-white w-100">
+            {/* Input 1 */}
+            <div className="mb-3">
+              <label htmlFor="username" className="form-label">
+                Please enter your username:
+              </label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                className="form-control"
+                value={input.username}
+                onChange={handleChange}
+              />
+            </div>
+
+            {/* Input 2 */}
+            <div className="mb-3">
+              <label htmlFor="password" className="form-label">
+                Please enter your password:
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                className="form-control"
+                value={input.password}
+                onChange={handleChange}
+              />
+            </div>
+
+            {/* Input 3 */}
+            <button
+              type="button"
+              className="btn btn-primary w-100"
+              onClick={handleLogin}
+            >
+              Login
+            </button>
+          </form>
+
+          {/* Input 4 */}
+          <p className="mt-3 text-center">
+            Don’t have an account? <Link to="/register">Create one</Link>
+          </p>
+        </div>
+      </div>
+    </>
   );
 };
 

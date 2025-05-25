@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Navbar from './Navbar';
+import { Link } from 'react-router-dom';
 const RegisterForm = () => {
   // Instantiated useNavigate
   const nagivate = useNavigate();
@@ -56,33 +58,72 @@ const RegisterForm = () => {
   };
 
   return (
-    <form>
-      <label>Please enter your username: </label>
-      <input
-        type="text"
-        id="username"
-        name="username"
-        value={username}
-        onChange={handleUsername}
-      />
-      <label>Please enter your email: </label>
-      <input
-        type="email"
-        id="email"
-        name="email"
-        value={email}
-        onChange={handleEmail}
-      />
-      <label>Please enter your password: </label>
-      <input
-        type="password"
-        id="password"
-        name="password"
-        value={password}
-        onChange={handlePassword}
-      />
-      <button onClick={handleRegister}>Create account</button>
-    </form>
+    <>
+      <Navbar />
+      <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
+        <div className="container" style={{ maxWidth: '400px' }}>
+          <form className="p-4 border rounded shadow-sm bg-white w-100">
+            {/* Input 1 */}
+            <div className="mb-3">
+              <label htmlFor="username" className="form-label">
+                Please enter your username:
+              </label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                className="form-control"
+                value={username}
+                onChange={handleUsername}
+              />
+            </div>
+
+            {/* Input 2 */}
+            <div className="mb-3">
+              <label htmlFor="email" className="form-label">
+                Please enter your email:
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                className="form-control"
+                value={email}
+                onChange={handleEmail}
+              />
+            </div>
+
+            {/* Input 3 */}
+            <div className="mb-3">
+              <label htmlFor="password" className="form-label">
+                Please enter your password:
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                className="form-control"
+                value={password}
+                onChange={handlePassword}
+              />
+            </div>
+
+            {/* Input 4 */}
+            <button
+              type="button"
+              className="btn btn-success w-100"
+              onClick={handleRegister}
+            >
+              Create account
+            </button>
+          </form>
+          {/* Input 5 */}
+          <p className="mt-3 text-center">
+            Alrady have an account? <Link to="/login">Login</Link>
+          </p>
+        </div>
+      </div>
+    </>
   );
 };
 

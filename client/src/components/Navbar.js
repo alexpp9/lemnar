@@ -30,7 +30,7 @@ const Navbar = () => {
 
           <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div className="navbar-nav ms-auto align-items-center gap-2">
-              <a className="nav-item nav-link active" href="/home">
+              <a className="nav-item nav-link" href="/home">
                 Home
               </a>
 
