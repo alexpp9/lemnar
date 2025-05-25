@@ -7,14 +7,14 @@ const Navbar = () => {
     <div>
       <nav className="navbar navbar-expand-lg navbar-light bg-light">
         <div className="container">
-          <a href="/" className="navbar-brand d-flex align-items-center">
+          <Link to="/" className="navbar-brand d-flex align-items-center">
             <img
               src="/logo.png"
               alt="Lemnar company logo"
               className="rounded"
               style={{ height: '58px', width: '58px', objectFit: 'cover' }}
             />
-          </a>
+          </Link>
 
           <button
             className="navbar-toggler"
@@ -30,18 +30,18 @@ const Navbar = () => {
 
           <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div className="navbar-nav ms-auto align-items-center gap-2">
-              <a className="nav-item nav-link" href="/home">
+              <Link className="nav-item nav-link" to="/home">
                 Home
-              </a>
+              </Link>
 
               {!auth.user ? (
                 <>
-                  <a className="nav-item nav-link" href="/login">
+                  <Link className="nav-item nav-link" to="/login">
                     Login
-                  </a>
-                  <a className="nav-item nav-link" href="/register">
+                  </Link>
+                  <Link className="nav-item nav-link" to="/register">
                     Register
-                  </a>
+                  </Link>
                 </>
               ) : (
                 <button className="btn btn-danger" onClick={auth.logOut}>
