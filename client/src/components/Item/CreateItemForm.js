@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const CreateItemForm = () => {
@@ -275,6 +276,7 @@ const CreateItemForm = () => {
               Create Item
             </button>
           </div>
+          <Link to="/home">Back home</Link>
         </form>
       </div>
     </div>

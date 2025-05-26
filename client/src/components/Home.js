@@ -1,4 +1,4 @@
-import Catalogue from './Catalogue';
+import Catalogue from './Item/Catalogue';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 

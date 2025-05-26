@@ -1,25 +1,25 @@
 // Authorization related Components
-import RegisterForm from './components/RegisterForm';
-import LoginForm from './components/LoginForm';
-import PrivateRoute from './components/PrivateRoute';
+import RegisterForm from './components/User/RegisterForm';
+import LoginForm from './components/User/LoginForm';
+import PrivateRoute from './components/Utilities/PrivateRoute';
 import AuthProvider from './hooks/AuthProvider';
 // Item related components
-import CreateItemForm from './components/CreateItemForm';
-import ItemDetails from './components/ItemDetails';
-import UpdateItemForm from './components/UpdateItemForm';
+import CreateItemForm from './components/Item/CreateItemForm';
+import ItemDetails from './components/Item/ItemDetails';
+import UpdateItemForm from './components/Item/UpdateItemForm';
 
 // Webapp structure related
 import Home from './components/Home';
 import IndexPage from './components/IndexPage';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
+import Navbar from './components/Partials/Navbar';
+import Footer from './components/Partials/Footer';
 
 // React Router - navigation import
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 function App() {
   return (
-    <div>
+    <div className="vh-100">
       <Router>
         <AuthProvider>
           <Navbar />

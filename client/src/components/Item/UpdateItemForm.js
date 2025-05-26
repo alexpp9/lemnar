@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-
 import axios from 'axios';
 const UpdateItemForm = () => {
   // Instantiate useNavigate
@@ -221,6 +220,7 @@ const UpdateItemForm = () => {
               Update Item
             </button>
           </div>
+          <Link to="/home">Back home</Link>
         </form>
       </div>
     </div>

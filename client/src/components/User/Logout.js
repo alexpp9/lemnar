@@ -1,4 +1,4 @@
-import { useAuth } from '../hooks/AuthProvider';
+import { useAuth } from '../../hooks/AuthProvider';
 const Logout = () => {
   // hook instance
   const auth = useAuth();
