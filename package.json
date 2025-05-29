@@ -4,7 +4,8 @@
   "description": "CA for Advanced Programming, DBS Course. Presentation website for a small furniture company.",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon app.js",
+    "test": "jest"
   },
   "author": "APP",
   "license": "ISC",
@@ -15,7 +16,10 @@
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "express-session": "^1.18.1",
-    "mongoose": "^8.14.1",
+    "mongoose": "^8.15.1",
     "nodemon": "^3.1.10"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
   }
 }
