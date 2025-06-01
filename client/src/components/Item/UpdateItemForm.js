@@ -31,6 +31,7 @@ const UpdateItemForm = () => {
   });
 
   // Handles change on all fields at once instead of doing it for each input field
+  // Function improved with AI.
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({

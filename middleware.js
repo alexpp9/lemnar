@@ -1,5 +1,5 @@
 const cloudinary = require('./cloudinary');
-
+// !These operations were done with the help of AI
 // Functions that deal with deleting images from cloudinary on Item delete
 // Extract the ID from URL
 function urlToPublicId(url) {

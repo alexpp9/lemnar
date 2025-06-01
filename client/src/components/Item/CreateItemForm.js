@@ -33,6 +33,7 @@ const CreateItemForm = () => {
     }));
   };
   // Upload to cloudinary and get back URLs
+  // Function written with the help of AI
   const uploadImagesToCloudinary = async (files) => {
     const urls = [];
 
