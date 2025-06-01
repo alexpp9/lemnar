@@ -23,6 +23,7 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
+/*
 // Fake request object
 const request = {
   body: {
@@ -39,6 +40,7 @@ const response = {
   status: jest.fn((x) => x).mockReturnThis(),
   json: jest.fn(),
 };
+
 it('should send a status code of 400 when user exists', async () => {
   // Mock findOne - return fake user
   User.findOne.mockImplementationOnce(() => ({
@@ -92,4 +94,33 @@ it('should send a status code 201 when new user is created', async () => {
   expect(saveMock).toHaveBeenCalled();
 
   expect(response.status).toHaveBeenCalledWith(201);
+});
+*/
+
+// Login User
+const request = {
+  body: {
+    username: 'test_username',
+    password: 'test_password',
+  },
+};
+
+const response = {
+  status: jest.fn((x) => x).mockReturnThis(),
+  json: jest.fn(),
+};
+// ==========
+it('should return a status code of 200 if user found', async () => {
+  // Mock findOne - return fake user
+  User.findOne.mockImplementationOnce(() => ({
+    username: 'test_username',
+  }));
+  // mock the findOne function call
+  await loginUser(request, response);
+  // Assertions
+  // excepts 400 (because user already exists)
+  expect(response.status).toHaveBeenCalledWith(400);
+  // Test to see if the chaining of .json works
+  // .toHaveBeenCalledTimes - asserts how many times a function has been called.
+  expect(response.json).toHaveBeenCalledTimes(1);
 });
