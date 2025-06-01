@@ -118,7 +118,7 @@ it('should return a status code of 200 if user found', async () => {
     password: 'hash password',
   }));
 
-  bcrypt.compare = jest.fn().mockResolvedValue(true);
+  bcrypt.compare = jest.fn().mockResolvedValue(true); // GPT suggestion
   // mock the findOne function call
   await loginUser(request, response);
   // Assertions
