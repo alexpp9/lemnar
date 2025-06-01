@@ -61,6 +61,12 @@ module.exports.loginUser = async (req, res) => {
 
     // find user via username
     const user = await User.findOne({ username });
+    if (!user) {
+      return res.status(404).json({
+        status: 'error',
+        message: 'Sorry! No user found.',
+      });
+    }
     // Compare passwords
     const comparisonResult = await bcrypt.compare(password, user.password);
     if (!user || !comparisonResult) {

@@ -103,6 +103,7 @@ const request = {
     username: 'test_username',
     password: 'test_password',
   },
+  session: {},
 };
 
 const response = {
@@ -114,12 +115,15 @@ it('should return a status code of 200 if user found', async () => {
   // Mock findOne - return fake user
   User.findOne.mockImplementationOnce(() => ({
     username: 'test_username',
+    password: 'hash password',
   }));
+
+  bcrypt.compare = jest.fn().mockResolvedValue(true);
   // mock the findOne function call
   await loginUser(request, response);
   // Assertions
   // excepts 400 (because user already exists)
-  expect(response.status).toHaveBeenCalledWith(400);
+  expect(response.status).toHaveBeenCalledWith(200);
   // Test to see if the chaining of .json works
   // .toHaveBeenCalledTimes - asserts how many times a function has been called.
   expect(response.json).toHaveBeenCalledTimes(1);
