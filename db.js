@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { port, mongoURL } = require('./config');
+const { mongoURL } = require('./config');
 
 // Connection to the DB (clurster)
 const connectDB = async () => {

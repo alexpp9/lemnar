@@ -68,14 +68,16 @@ const CreateItemForm = () => {
 
     try {
       const uploadedImageUrls = await uploadImagesToCloudinary(
+        // if no data is returned to Cloudinary, set uploadedImagesUrls to empty array
         formData.image_url || []
       );
 
+      // Put together data
       const itemData = {
         ...formData,
         image_url: uploadedImageUrls,
       };
-
+      // make new item
       createItem(itemData);
 
       navigate(`/`);
@@ -113,7 +115,7 @@ const CreateItemForm = () => {
     <div className="row justify-content-center">
       <div className="col-md-6">
         <form className="p-4 border rounded bg-light shadow-sm w-100">
-          {/* 1 */}
+          {/* 1 - name */}
           <div className="mb-4 w-100">
             <label
               htmlFor="name"
@@ -129,7 +131,7 @@ const CreateItemForm = () => {
             />
           </div>
 
-          {/* 2 */}
+          {/* 2 - type */}
           <div className="mb-4 w-100">
             <label
               htmlFor="type"
@@ -145,7 +147,7 @@ const CreateItemForm = () => {
             />
           </div>
 
-          {/* 3 */}
+          {/* 3 - material */}
           <div className="mb-4 w-100">
             <label
               htmlFor="material"
@@ -161,7 +163,7 @@ const CreateItemForm = () => {
             />
           </div>
 
-          {/* 4 */}
+          {/* 4 - colour */}
           <div className="mb-4 w-100">
             <label
               htmlFor="colour"
@@ -177,7 +179,7 @@ const CreateItemForm = () => {
             />
           </div>
 
-          {/* 5 */}
+          {/* 5 - weight */}
           <div className="mb-4 w-100">
             <label
               htmlFor="weight"
@@ -194,7 +196,7 @@ const CreateItemForm = () => {
             />
           </div>
 
-          {/* 6 */}
+          {/* 6 - price */}
           <div className="mb-4 w-100">
             <label
               htmlFor="price"
@@ -211,7 +213,7 @@ const CreateItemForm = () => {
             />
           </div>
 
-          {/* 7 */}
+          {/* 7 - room */}
           <div className="mb-4 w-100">
             <label
               htmlFor="room"
@@ -227,7 +229,7 @@ const CreateItemForm = () => {
             />
           </div>
 
-          {/* 8 */}
+          {/* 8 - image url (can be multiple) */}
           <div className="mb-4 w-100">
             <label
               htmlFor="image_url"
@@ -250,7 +252,7 @@ const CreateItemForm = () => {
             />
           </div>
 
-          {/* 9 */}
+          {/* 9 - description */}
           <div className="mb-4 w-100">
             <label
               htmlFor="description"

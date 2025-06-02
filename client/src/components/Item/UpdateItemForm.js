@@ -77,7 +77,7 @@ const UpdateItemForm = () => {
     <div className="row justify-content-center">
       <div className="col-md-6">
         <form className="p-4 border rounded bg-white shadow-sm w-100">
-          {/* 1 */}
+          {/* 1 - name */}
           <div className="mb-3 w-100">
             <label
               htmlFor="name"
@@ -93,7 +93,7 @@ const UpdateItemForm = () => {
             />
           </div>
 
-          {/* 2 */}
+          {/* 2 - type */}
           <div className="mb-3 w-100">
             <label
               htmlFor="type"
@@ -109,7 +109,7 @@ const UpdateItemForm = () => {
             />
           </div>
 
-          {/* 3 */}
+          {/* 3 - material */}
           <div className="mb-3 w-100">
             <label
               htmlFor="material"
@@ -125,7 +125,7 @@ const UpdateItemForm = () => {
             />
           </div>
 
-          {/* 4 */}
+          {/* 4 - colour */}
           <div className="mb-3 w-100">
             <label
               htmlFor="colour"
@@ -141,7 +141,7 @@ const UpdateItemForm = () => {
             />
           </div>
 
-          {/* 5 */}
+          {/* 5 - weight */}
           <div className="mb-3 w-100">
             <label
               htmlFor="weight"
@@ -158,7 +158,7 @@ const UpdateItemForm = () => {
             />
           </div>
 
-          {/* 6 */}
+          {/* 6 - price */}
           <div className="mb-3 w-100">
             <label
               htmlFor="price"
@@ -175,7 +175,7 @@ const UpdateItemForm = () => {
             />
           </div>
 
-          {/* 7 */}
+          {/* 7 - room */}
           <div className="mb-3 w-100">
             <label
               htmlFor="room"
@@ -191,10 +191,10 @@ const UpdateItemForm = () => {
             />
           </div>
 
-          {/* 8 */}
+          {/* 8 - images */}
           {/* (Empty, preserved as requested) */}
 
-          {/* 9 */}
+          {/* 9 - descriptions */}
           <div className="mb-3 w-100">
             <label
               htmlFor="description"

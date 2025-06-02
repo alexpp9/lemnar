@@ -60,7 +60,7 @@ const RegisterForm = () => {
     <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
       <div className="container" style={{ maxWidth: '400px' }}>
         <form className="p-4 border rounded shadow-sm bg-white w-100">
-          {/* Input 1 */}
+          {/* Input 1 - username */}
           <div className="mb-3">
             <label htmlFor="username" className="form-label">
               Please enter your username:
@@ -75,7 +75,7 @@ const RegisterForm = () => {
             />
           </div>
 
-          {/* Input 2 */}
+          {/* Input 2 - email */}
           <div className="mb-3">
             <label htmlFor="email" className="form-label">
               Please enter your email:
@@ -90,7 +90,7 @@ const RegisterForm = () => {
             />
           </div>
 
-          {/* Input 3 */}
+          {/* Input 3 - password */}
           <div className="mb-3">
             <label htmlFor="password" className="form-label">
               Please enter your password:
@@ -105,7 +105,7 @@ const RegisterForm = () => {
             />
           </div>
 
-          {/* Input 4 */}
+          {/* Input 4 - submit */}
           <button
             type="button"
             className="btn btn-success w-100"
@@ -114,7 +114,7 @@ const RegisterForm = () => {
             Create account
           </button>
         </form>
-        {/* Input 5 */}
+        {/* Input 5 - link to login */}
         <p className="mt-3 text-center">
           Alrady have an account? <Link to="/login">Login</Link>
         </p>

@@ -45,6 +45,7 @@ const ItemDetails = () => {
 
       {/* Item Images */}
       <div className="row mb-4 g-3">
+        {/* key={idx} as unique identifier for each image */}
         {item.image_url.map((url, idx) => (
           <div key={idx} className="col-6 col-md-4">
             <img

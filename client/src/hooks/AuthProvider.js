@@ -57,7 +57,7 @@ const AuthProvider = ({ children }) => {
       console.error('Login error:', err);
     }
   };
-
+  // Logout function
   const logOut = async () => {
     try {
       await client.post('/logoutUser');

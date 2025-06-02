@@ -41,7 +41,7 @@ const LoginForm = () => {
     <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
       <div className="container" style={{ maxWidth: '450px' }}>
         <form className="p-4 border rounded shadow-sm bg-white w-100">
-          {/* Input 1 */}
+          {/* Input 1 - username */}
           <div className="mb-3">
             <label htmlFor="username" className="form-label">
               Please enter your username:
@@ -56,7 +56,7 @@ const LoginForm = () => {
             />
           </div>
 
-          {/* Input 2 */}
+          {/* Input 2 - password */}
           <div className="mb-3">
             <label htmlFor="password" className="form-label">
               Please enter your password:
@@ -71,7 +71,7 @@ const LoginForm = () => {
             />
           </div>
 
-          {/* Input 3 */}
+          {/* Input 3 - submit */}
           <button
             type="button"
             className="btn btn-primary w-100"
@@ -81,7 +81,7 @@ const LoginForm = () => {
           </button>
         </form>
 
-        {/* Input 4 */}
+        {/* Input 4 - link to registration */}
         <p className="mt-3 text-center">
           Don’t have an account? <Link to="/register">Create one</Link>
         </p>
