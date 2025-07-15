@@ -25,12 +25,12 @@ module.exports.createReview = async (req, res) => {
       });
     }
     // check required fields
-    // if (!rating) {
-    //   return res.status(401).json({
-    //     status: 'error',
-    //     message: 'You need to at least leave a rating for posting a review.',
-    //   });
-    // }
+    if (!rating) {
+      return res.status(401).json({
+        status: 'error',
+        message: 'You need to at least leave a rating for posting a review.',
+      });
+    }
     // Create new review
     const review = new Review({ body, rating });
     review.author = req.session.user._id;

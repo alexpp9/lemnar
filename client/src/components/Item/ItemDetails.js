@@ -117,8 +117,8 @@ const ItemDetails = () => {
           <ReviewForm data={item._id} />
         ) : (
           <p>
-            <Link to="/register">Register</Link>/<Link to="/login">Login</Link>
-            in order to leave a comment! 😄
+            <Link to="/register">Register</Link>&emsp; or&emsp;
+            <Link to="/login">Login</Link>&emsp; in order to leave a comment! 😄
           </p>
         )}
       </div>
