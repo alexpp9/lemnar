@@ -8,9 +8,9 @@ const User = require('../models/user');
 
 module.exports.createReview = async (req, res) => {
   try {
-    const { body, rating } = req.body;
+    const { body, rating = 0, item_ref } = req.body;
     // find furniture item by id;
-    const item = await Item.findById(req.params.id);
+    const item = await Item.findById(item_ref);
     if (!item) {
       return res.status(404).json({
         status: 'error',
@@ -25,12 +25,12 @@ module.exports.createReview = async (req, res) => {
       });
     }
     // check required fields
-    if (!rating) {
-      return res.status(401).json({
-        status: 'error',
-        message: 'You need to at least leave a rating for posting a review.',
-      });
-    }
+    // if (!rating) {
+    //   return res.status(401).json({
+    //     status: 'error',
+    //     message: 'You need to at least leave a rating for posting a review.',
+    //   });
+    // }
     // Create new review
     const review = new Review({ body, rating });
     review.author = req.session.user._id;

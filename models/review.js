@@ -8,10 +8,10 @@ const ReviewSchema = new Schema(
     body: {
       type: String,
     },
-    rating: {
-      type: Number,
-      required: true,
-    },
+    // rating: {
+    //   type: Number,
+    //   required: true,
+    // },
     author: {
       type: Schema.Types.ObjectId,
       ref: 'User',

@@ -4,6 +4,9 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/AuthProvider';
 import axios from 'axios';
 
+// Components
+import ReviewForm from '../Review/ReviewForm';
+
 const ItemDetails = () => {
   // Initialize navigate
   const navigate = useNavigate();
@@ -59,7 +62,7 @@ const ItemDetails = () => {
       </div>
 
       {/* Item Info Card */}
-      <div className="card shadow-lg mb-3">
+      <div className="card shadow-lg mb-4">
         <div className="card-body">
           <h5 className="card-title border-bottom pb-2 mb-3">Details</h5>
           <ul className="list-group list-group-flush">
@@ -106,6 +109,18 @@ const ItemDetails = () => {
             Go back
           </Link>
         </div>
+      </div>
+
+      {/* Post comment form */}
+      <div className="mb-3">
+        {auth.user ? (
+          <ReviewForm data={item._id} />
+        ) : (
+          <p>
+            <Link to="/register">Register</Link>/<Link to="/login">Login</Link>
+            in order to leave a comment! 😄
+          </p>
+        )}
       </div>
     </div>
   );
