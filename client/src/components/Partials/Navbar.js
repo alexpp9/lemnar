@@ -33,7 +33,9 @@ const Navbar = () => {
               <Link className="nav-item nav-link" to="/home">
                 Home
               </Link>
-
+              <Link className="nav-item nav-link" to="/contact">
+                Contact
+              </Link>
               {!auth.user ? (
                 <>
                   <Link className="nav-item nav-link" to="/login">

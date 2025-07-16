@@ -10,6 +10,7 @@ import UpdateItemForm from './components/Item/UpdateItemForm';
 
 // Webapp structure related
 import Home from './components/Home';
+import Contact from './components/Contact/Contact';
 import IndexPage from './components/IndexPage';
 import Navbar from './components/Partials/Navbar';
 import Footer from './components/Partials/Footer';
@@ -29,6 +30,7 @@ function App() {
               <Route path="/" element={<IndexPage />} />
               <Route path="/login" element={<LoginForm />} />
               <Route path="/home" element={<Home />} />
+              <Route path="/contact" element={<Contact />} />
               <Route path="/register" element={<RegisterForm />} />
               <Route path="/details" element={<ItemDetails />} />
 
