@@ -2,13 +2,16 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+
+// Axios instance
+const client = axios.create({
+  baseURL: 'http://localhost:3000',
+});
+
 const RegisterForm = () => {
   // Instantiated useNavigate
   const nagivate = useNavigate();
-  // Axios instance
-  const client = axios.create({
-    baseURL: 'http://localhost:3000',
-  });
+
   // Declare state
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');

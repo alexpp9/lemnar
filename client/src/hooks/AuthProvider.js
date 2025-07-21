@@ -1,6 +1,6 @@
 import { useContext, createContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { client } from '../components/Utilities/Client';
 
 const AuthContext = createContext();
 
@@ -9,11 +9,6 @@ const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem('site') || '');
   const navigate = useNavigate();
 
-  // Create an Axios instance
-  const client = axios.create({
-    baseURL: 'http://localhost:3000',
-    withCredentials: true,
-  });
   // Check if user is already logged in on mount
   useEffect(() => {
     const checkSession = async () => {
@@ -38,7 +33,7 @@ const AuthProvider = ({ children }) => {
       }
     };
     checkSession();
-  }, [token, client]);
+  }, [token]);
 
   // Login function
   const loginAction = async ({ username, password }) => {

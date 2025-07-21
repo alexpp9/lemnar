@@ -1,16 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
+import { client } from '../Utilities/Client';
+
 import axios from 'axios';
 
 const CreateItemForm = () => {
   // Instantiate useNavigate
   const navigate = useNavigate();
-  // Axios instance
-  const client = axios.create({
-    baseURL: 'http://localhost:3000',
-    withCredentials: true,
-  });
 
   //   Form fields state
   const [formData, setFormData] = useState({

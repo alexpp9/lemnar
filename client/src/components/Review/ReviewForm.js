@@ -1,15 +1,8 @@
 import { useState } from 'react';
 import { useAuth } from '../../hooks/AuthProvider';
-
-import axios from 'axios';
+import { client } from '../Utilities/Client';
 
 const ReviewForm = ({ data }) => {
-  // Axios instance
-  const client = axios.create({
-    baseURL: 'http://localhost:3000',
-    withCredentials: true,
-  });
-
   // For protection
   const auth = useAuth();
 

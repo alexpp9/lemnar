@@ -58,13 +58,13 @@ const ItemSchema = new Schema(
       maxLength: [1000, 'Description cannot exceed 1000 characters.'],
     },
     user_ref: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'User',
       // required: true,
     },
     reviews_ref: [
       {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         ref: 'Review',
       },
     ],

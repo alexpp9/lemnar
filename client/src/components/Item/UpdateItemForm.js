@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+
+import { client } from '../Utilities/Client';
+
 const UpdateItemForm = () => {
   // Instantiate useNavigate
   const navigate = useNavigate();
@@ -22,12 +24,6 @@ const UpdateItemForm = () => {
     price: itemToUpdate.price,
     room: itemToUpdate.room,
     description: itemToUpdate.description,
-  });
-
-  // Axios instance
-  const client = axios.create({
-    baseURL: 'http://localhost:3000',
-    withCredentials: true,
   });
 
   // Handles change on all fields at once instead of doing it for each input field
