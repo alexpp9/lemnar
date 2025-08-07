@@ -26,8 +26,9 @@ const Item = ({ data }) => {
                 <p className="card-text">{item.description}</p>
 
                 <Link
-                  to="/details"
-                  state={{ item }}
+                  to={`/details/${item._id}`}
+                  // to="/details"
+                  // state={{ item }}
                   className="btn btn-primary mt-2"
                 >
                   View Details

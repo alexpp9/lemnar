@@ -82,7 +82,15 @@ module.exports.createItem = async (req, res) => {
 module.exports.getDetails = async (req, res) => {
   try {
     // Find the item in DB based on id;
-    const item = await Item.findById(req.params.id).populate('reviews_ref');
+    const item = await Item.findById(req.params.id).populate({
+      path: 'reviews_ref',
+      select: 'body rating author createdAt',
+      populate: {
+        path: 'author',
+        select: 'username',
+      },
+    });
+
     if (!item) {
       return res
         .status(404)

@@ -32,7 +32,8 @@ function App() {
               <Route path="/home" element={<Home />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/register" element={<RegisterForm />} />
-              <Route path="/details" element={<ItemDetails />} />
+              <Route path="/details/:id" element={<ItemDetails />} />
+              {/* <Route path="/details" element={<ItemDetails />} /> */}
 
               {/* Private routes */}
               <Route element={<PrivateRoute />}>
