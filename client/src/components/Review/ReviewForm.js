@@ -49,14 +49,14 @@ const ReviewForm = ({ data }) => {
     <form className="border rounded p-3 bg-white shadow-sm mb-3 shadow-lg">
       <h6 className="border-bottom pb-2 mb-3 text-muted">Leave a comment</h6>
       <div className="mb-3">
-        <label for="customRange2" className="form-label">
+        <label htmlFor="customRange2" className="form-label">
           Rating: {rating}
         </label>
         <input
           onChange={handleRating}
           type="range"
           value={rating}
-          class="form-range"
+          className="form-range"
           min="0"
           max="5"
           id="rating"
