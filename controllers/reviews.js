@@ -1,6 +1,6 @@
 const Review = require('../models/review');
 const Item = require('../models/item');
-const User = require('../models/user');
+const mongoose = require('mongoose');
 
 // Reviews model controllers
 
@@ -55,9 +55,15 @@ module.exports.createReview = async (req, res) => {
 module.exports.deleteReview = async (req, res) => {
   try {
     // find furniture item by id;
-    const reviewID = req.params.reviewID;
+    const { id: itemID, reviewID } = req.params;
     const review = await Review.findById(reviewID);
-
+    // Check the existance of the review
+    if (!review) {
+      return res.status(404).json({
+        status: 'error',
+        message: 'Review not found',
+      });
+    }
     // Check user loggin.
     if (
       !req.session.user ||
@@ -69,12 +75,13 @@ module.exports.deleteReview = async (req, res) => {
           'Forbidden! One cannot delete a review without being logged in.',
       });
     }
+
     // Delete
     // $pull finds the item fitting the criteria and pulls it from the array (deletes it)
     // findByIdAndUpdate updates the Item.reviews_ref without the said review
     // findByIdAndDelete, deletes the review from the DB.
-    const item = await Item.findByIdAndUpdate(req.params.id, {
-      $pull: { reviews_ref: reviewID },
+    const item = await Item.findByIdAndUpdate(itemID, {
+      $pull: { reviews_ref: new mongoose.Types.ObjectId(reviewID) },
     });
     const deletedReview = await Review.findByIdAndDelete(reviewID);
 
@@ -84,6 +91,7 @@ module.exports.deleteReview = async (req, res) => {
       data: deletedReview,
     });
   } catch (error) {
+    console.log(error);
     res
       .status(500)
       .json({ status: 'error', message: 'Failed to delete review!' });

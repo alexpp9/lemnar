@@ -5,7 +5,6 @@ import { client } from '../Utilities/Client';
 const ReviewForm = ({ data }) => {
   // For protection
   const auth = useAuth();
-
   //   Form fields state
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState('');
@@ -21,7 +20,6 @@ const ReviewForm = ({ data }) => {
   // Form Submission
   const handleCreateComment = (e) => {
     e.preventDefault();
-
     createComment(comment, rating);
   };
 

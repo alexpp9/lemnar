@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/AuthProvider';
-import axios from 'axios';
+
 import { client } from '../Utilities/Client';
 
 // Components
@@ -48,10 +48,19 @@ const ItemDetails = () => {
   //   Function call to delete Item.
   const deleteItem = async () => {
     try {
-      await axios.delete(`http://localhost:3000/api/items/${item._id}`, {
-        withCredentials: true,
-      });
+      await client.delete(`/api/items/${item._id}`);
       navigate('/home');
+    } catch (err) {
+      console.error('Error occured while trying to delete:', err);
+    }
+  };
+
+  // DELETE review
+  const deleteReview = async (reviewID) => {
+    try {
+      await client.delete(`/api/items/${item._id}/reviews/${reviewID}`);
+      const response = await client.get(`/api/items/${id}`);
+      setItem(response.data.data);
     } catch (err) {
       console.error('Error occured while trying to delete:', err);
     }
@@ -161,8 +170,17 @@ const ItemDetails = () => {
                       {review.rating}/5
                     </p>
                   )}
-
                   <p className="mb-0">{review.body}</p>
+                  {auth.user && auth.user._id === review.author._id ? (
+                    <button
+                      onClick={() => deleteReview(review._id)}
+                      className="btn btn-danger btn-sm mr-100"
+                    >
+                      Delete Review
+                    </button>
+                  ) : (
+                    ' '
+                  )}
                 </li>
               ))}
             </ul>

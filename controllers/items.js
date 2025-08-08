@@ -36,8 +36,9 @@ module.exports.createItem = async (req, res) => {
       description,
     } = req.body;
     // Check permission
+
     if (!req.session.user || !req.session.user.isAdmin) {
-      return res.status(401).json({
+      return res.status(403).json({
         status: 'Error',
         message: 'You are unauthorized to perform this action!',
       });

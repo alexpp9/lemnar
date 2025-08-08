@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import auth from '../Utilities/PrivateRoute';
+// import auth from '../Utilities/PrivateRoute';
 
 const EmailForm = () => {
   //   Form fields state
