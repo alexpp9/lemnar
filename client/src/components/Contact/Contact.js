@@ -7,7 +7,7 @@ const Contact = () => {
       {/* Title */}
       <h2 className="mb-4 text-center fw-bold">Get in Touch</h2>
 
-      {/* Contact Form */}
+      {/* Contact Form + Map*/}
       <div className="row g-4">
         {/* Contact Form */}
         <EmailForm />

@@ -13,26 +13,34 @@ const Map = () => {
   });
 
   return (
-    <MapContainer
-      className="col-12 col-md-6 shadow-sm  border rounded"
-      center={centerPosition}
-      zoom={10}
-    >
-      <TileLayer
-        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-      />
-      <Marker position={lemnarPosition} icon={customIcon}>
-        <Popup>
-          <h5>
-            Get direction to{' '}
-            <a href={googleMapsUrl} target="_blank" rel="noopener noreferrer">
-              Lemnar
-            </a>
-          </h5>
-        </Popup>
-      </Marker>
-    </MapContainer>
+    <div className="col-12 col-md-6">
+      <div className="shadow-sm border rounded h-100">
+        <MapContainer
+          center={centerPosition}
+          zoom={10}
+          style={{ width: '100%', height: '540px' }}
+        >
+          <TileLayer
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+          <Marker position={lemnarPosition} icon={customIcon}>
+            <Popup>
+              <h5>
+                Get direction to{' '}
+                <a
+                  href={googleMapsUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Lemnar
+                </a>
+              </h5>
+            </Popup>
+          </Marker>
+        </MapContainer>
+      </div>
+    </div>
   );
 };
 
