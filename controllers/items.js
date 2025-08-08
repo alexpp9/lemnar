@@ -1,4 +1,5 @@
 const Item = require('../models/item');
+const Review = require('../models/review');
 const { deleteImagesByUrl } = require('../middleware');
 
 // Get items;
@@ -160,7 +161,9 @@ module.exports.deleteItem = async (req, res) => {
         message: 'You are unauthorized to perform this action!',
       });
     }
-
+    const item = await Item.findById(id);
+    // Delete all reviews associated with the Item
+    await Review.deleteMany({ _id: { $in: item.reviews_ref } });
     // Perform operation
     const deletedItem = await Item.findByIdAndDelete(id);
     // deletedItem === null if no item was found to be deleted.
