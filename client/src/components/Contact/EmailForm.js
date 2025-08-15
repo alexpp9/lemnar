@@ -1,7 +1,11 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { client } from '../Utilities/Client';
 // import auth from '../Utilities/PrivateRoute';
 
 const EmailForm = () => {
+  // Instantiate useNavigate
+  const navigate = useNavigate();
   //   Form fields state
   const [formData, setFormData] = useState({
     name: '',
@@ -17,29 +21,40 @@ const EmailForm = () => {
       [name]: value,
     }));
   };
+
   // Handles the submit
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  //   try {
-  //     const uploadedImageUrls = await uploadImagesToCloudinary(
-  //       // if no data is returned to Cloudinary, set uploadedImagesUrls to empty array
-  //       formData.image_url || []
-  //     );
+    try {
+      // Send email
+      sendEmail(formData);
+      // Redirect back
+      navigate(`/contact`);
+    } catch (error) {
+      console.error('Error occured during sending the email:', error);
+    }
+  };
 
-  //     // Put together data
-  //     const itemData = {
-  //       ...formData,
-  //       image_url: uploadedImageUrls,
-  //     };
-  //     // make new item
-  //     createItem(itemData);
+  // API call function using axios instance
+  const sendEmail = (emailData) => {
+    client
+      .post('/api/contact', emailData)
+      .then((response) => {
+        console.log('Email send successfully', response.data);
 
-  //     navigate(`/`);
-  //   } catch (error) {
-  //     console.error('Error during submit:', error);
-  //   }
-  // };
+        // Reset the form fields after successful creation
+        setFormData({
+          name: '',
+          email: '',
+          subject: '',
+          message: '',
+        });
+      })
+      .catch((error) => {
+        console.error('Error in sending the email API call!', error);
+      });
+  };
   return (
     <>
       <div className="col-12 col-md-6">
@@ -106,7 +121,7 @@ const EmailForm = () => {
             <button
               type="submit"
               className="btn btn-primary w-100"
-              // onClick={handleSubmit}
+              onClick={handleSubmit}
             >
               Send Message
             </button>
