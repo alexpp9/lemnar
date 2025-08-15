@@ -6,4 +6,6 @@ module.exports = {
   // mongoURL: 'mongodb://localhost:27017/lemnar-testDB',
   mongoURL: 'mongodb://localhost:27017/lemnar',
   sessionSecret: process.env.SECRET_SESSION,
+  email_password: process.env.EMAIL_PASSWORD,
+  email_host: process.env.EMAIL_HOST,
 };

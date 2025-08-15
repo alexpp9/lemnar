@@ -8,6 +8,8 @@ const itemRoutes = require('./routes/items');
 const reviewRoutes = require('./routes/reviews');
 // users
 const userRoutes = require('./routes/users');
+// email route
+const emailRoute = require('./routes/contact');
 module.exports.createApp = () => {
   const app = express();
   // Controllers for Item model;
@@ -45,6 +47,7 @@ module.exports.createApp = () => {
   // ======
   // Using the router
   app.use('/', userRoutes);
+  app.use('/', emailRoute);
   app.use('/api/items', itemRoutes);
   app.use('/api/items/:id/reviews', reviewRoutes);
 

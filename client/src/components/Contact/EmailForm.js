@@ -39,7 +39,7 @@ const EmailForm = () => {
   // API call function using axios instance
   const sendEmail = (emailData) => {
     client
-      .post('/api/contact', emailData)
+      .post('/contact', emailData)
       .then((response) => {
         console.log('Email send successfully', response.data);
 
@@ -70,6 +70,7 @@ const EmailForm = () => {
                 type="text"
                 className="form-control"
                 id="name"
+                name="name"
                 value={formData.name}
                 onChange={handleChange}
                 required
@@ -85,6 +86,7 @@ const EmailForm = () => {
                 type="email"
                 className="form-control"
                 id="email"
+                name="email"
                 value={formData.email}
                 onChange={handleChange}
                 required
@@ -99,6 +101,7 @@ const EmailForm = () => {
                 type="text"
                 className="form-control"
                 id="subject"
+                name="subject"
                 value={formData.subject}
                 onChange={handleChange}
               />
@@ -112,6 +115,7 @@ const EmailForm = () => {
                 className="form-control"
                 id="message"
                 rows="4"
+                name="message"
                 value={formData.message}
                 onChange={handleChange}
                 required
