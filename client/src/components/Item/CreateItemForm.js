@@ -109,7 +109,7 @@ const CreateItemForm = () => {
   };
 
   return (
-    <div className="row justify-content-center">
+    <div className="row justify-content-center m-5">
       <div className="col-md-6">
         <form className="p-4 border rounded bg-light shadow-sm w-100">
           {/* 1 - name */}
