@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const FilterForm = () => {
+const FilterForm = (props) => {
   const [filterFormData, setFilterFormData] = useState({
     kitchen: '',
     bedroom: '',
@@ -23,9 +23,24 @@ const FilterForm = () => {
     }));
   };
 
-  // Handles form submit
+  // Handle search submit
   const handleSubmit = (e) => {
     e.preventDefault();
+    // Used to send the data to parent.
+    // Props triggers a getSearchTermData function
+    props.handleSubmit(filterFormData);
+    setFilterFormData({
+      kitchen: '',
+      bedroom: '',
+      livingRoom: '',
+      diningRoom: '',
+      outdoor: '',
+      office: '',
+      other: '',
+      lowPrice: '',
+      mediumPrice: '',
+      highPrice: '',
+    });
   };
   return (
     <>

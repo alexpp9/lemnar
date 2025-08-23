@@ -7,11 +7,17 @@ import SearchBar from './SearchBar';
 const Item = ({ data }) => {
   // Sets filterSearchTerm
   const [filterSearchTerm, setFilterSearchTerm] = useState();
+  // Sets filters
+  const [filters, setFilters] = useState();
   // Gets data from child
   const getSearchTermData = (childData) => {
     setFilterSearchTerm(childData);
   };
-
+  // Gets data from child
+  const getFiltersData = (chilData) => {
+    setFilters(chilData);
+  };
+  console.log(filters);
   // To reset the search
   // Reset handler
   const handleReset = () => setFilterSearchTerm('');
@@ -24,7 +30,7 @@ const Item = ({ data }) => {
       {/* Main layout row */}
       <div className="row">
         {/* Filtering Form */}
-        <FilterForm />
+        <FilterForm handleSubmit={getFiltersData} />
         {/* Items list */}
         <div className="col-12 col-md-9">
           {data
