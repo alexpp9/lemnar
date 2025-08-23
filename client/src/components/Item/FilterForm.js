@@ -1,4 +1,32 @@
+import { useState } from 'react';
+
 const FilterForm = () => {
+  const [filterFormData, setFilterFormData] = useState({
+    kitchen: '',
+    bedroom: '',
+    livingRoom: '',
+    diningRoom: '',
+    outdoor: '',
+    office: '',
+    other: '',
+    lowPrice: '',
+    mediumPrice: '',
+    highPrice: '',
+  });
+
+  // Handles change on all fields at once instead of doing it for each input field
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFilterFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  // Handles form submit
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
   return (
     <>
       {/*         'kitchen',
@@ -23,6 +51,7 @@ const FilterForm = () => {
                   type="checkbox"
                   id="kitchen"
                   name="kitchen"
+                  onChange={handleChange}
                 />
                 <label className="form-check-label" htmlFor="kitchen">
                   Kitchen
@@ -35,6 +64,7 @@ const FilterForm = () => {
                   type="checkbox"
                   id="livingRoom"
                   name="livingRoom"
+                  onChange={handleChange}
                 />
                 <label className="form-check-label" htmlFor="livingRoom">
                   Living Room
@@ -47,6 +77,7 @@ const FilterForm = () => {
                   type="checkbox"
                   id="diningRoom"
                   name="diningRoom"
+                  onChange={handleChange}
                 />
                 <label className="form-check-label" htmlFor="diningRoom">
                   Dining Room
@@ -59,6 +90,7 @@ const FilterForm = () => {
                   type="checkbox"
                   id="office"
                   name="office"
+                  onChange={handleChange}
                 />
                 <label className="form-check-label" htmlFor="office">
                   Office
@@ -71,6 +103,7 @@ const FilterForm = () => {
                   type="checkbox"
                   id="outdoor"
                   name="outdoor"
+                  onChange={handleChange}
                 />
                 <label className="form-check-label" htmlFor="outdoor">
                   Outdoor
@@ -81,8 +114,22 @@ const FilterForm = () => {
                 <input
                   className="form-check-input"
                   type="checkbox"
+                  id="bedroom"
+                  name="bedroom"
+                  onChange={handleChange}
+                />
+                <label className="form-check-label" htmlFor="bedroom">
+                  Bedroom
+                </label>
+              </div>
+              {/* Category 7 */}
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
                   id="other"
                   name="other"
+                  onChange={handleChange}
                 />
                 <label className="form-check-label" htmlFor="other">
                   Other
@@ -100,6 +147,7 @@ const FilterForm = () => {
                   type="checkbox"
                   id="lowPrice"
                   name="lowPrice"
+                  onChange={handleChange}
                 />
                 <label className="form-check-label" htmlFor="lowPrice">
                   $0 - $50
@@ -112,6 +160,7 @@ const FilterForm = () => {
                   type="checkbox"
                   id="mediumPrice"
                   name="mediumPrice"
+                  onChange={handleChange}
                 />
                 <label className="form-check-label" htmlFor="mediumPrice">
                   $50 - $150
@@ -124,6 +173,7 @@ const FilterForm = () => {
                   type="checkbox"
                   id="highPrice"
                   name="highPrice"
+                  onChange={handleChange}
                 />
                 <label className="form-check-label" htmlFor="highPrice">
                   $150+
@@ -131,7 +181,9 @@ const FilterForm = () => {
               </div>
             </div>
 
-            <button className="btn btn-primary w-100">Apply Filters</button>
+            <button className="btn btn-primary w-100" onClick={handleSubmit}>
+              Apply Filters
+            </button>
           </form>
         </div>
       </div>
