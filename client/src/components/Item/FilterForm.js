@@ -2,24 +2,24 @@ import { useState } from 'react';
 
 const FilterForm = (props) => {
   const [filterFormData, setFilterFormData] = useState({
-    kitchen: '',
-    bedroom: '',
-    livingRoom: '',
-    diningRoom: '',
-    outdoor: '',
-    office: '',
-    other: '',
-    lowPrice: '',
-    mediumPrice: '',
-    highPrice: '',
+    kitchen: false,
+    bedroom: false,
+    livingRoom: false,
+    diningRoom: false,
+    outdoor: false,
+    office: false,
+    other: false,
+    lowPrice: false,
+    mediumPrice: false,
+    highPrice: false,
   });
 
   // Handles change on all fields at once instead of doing it for each input field
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name } = e.target;
     setFilterFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: true,
     }));
   };
 
@@ -30,16 +30,16 @@ const FilterForm = (props) => {
     // Props triggers a getSearchTermData function
     props.handleSubmit(filterFormData);
     setFilterFormData({
-      kitchen: '',
-      bedroom: '',
-      livingRoom: '',
-      diningRoom: '',
-      outdoor: '',
-      office: '',
-      other: '',
-      lowPrice: '',
-      mediumPrice: '',
-      highPrice: '',
+      kitchen: false,
+      bedroom: false,
+      livingRoom: false,
+      diningRoom: false,
+      outdoor: false,
+      office: false,
+      other: false,
+      lowPrice: false,
+      mediumPrice: false,
+      highPrice: false,
     });
   };
   return (
@@ -66,6 +66,7 @@ const FilterForm = (props) => {
                   type="checkbox"
                   id="kitchen"
                   name="kitchen"
+                  checked={filterFormData.kitchen}
                   onChange={handleChange}
                 />
                 <label className="form-check-label" htmlFor="kitchen">
@@ -79,6 +80,7 @@ const FilterForm = (props) => {
                   type="checkbox"
                   id="livingRoom"
                   name="livingRoom"
+                  checked={filterFormData.livingRoom}
                   onChange={handleChange}
                 />
                 <label className="form-check-label" htmlFor="livingRoom">
@@ -92,6 +94,7 @@ const FilterForm = (props) => {
                   type="checkbox"
                   id="diningRoom"
                   name="diningRoom"
+                  checked={filterFormData.diningRoom}
                   onChange={handleChange}
                 />
                 <label className="form-check-label" htmlFor="diningRoom">
@@ -105,6 +108,7 @@ const FilterForm = (props) => {
                   type="checkbox"
                   id="office"
                   name="office"
+                  checked={filterFormData.office}
                   onChange={handleChange}
                 />
                 <label className="form-check-label" htmlFor="office">
@@ -118,6 +122,7 @@ const FilterForm = (props) => {
                   type="checkbox"
                   id="outdoor"
                   name="outdoor"
+                  checked={filterFormData.outdoor}
                   onChange={handleChange}
                 />
                 <label className="form-check-label" htmlFor="outdoor">
@@ -131,6 +136,7 @@ const FilterForm = (props) => {
                   type="checkbox"
                   id="bedroom"
                   name="bedroom"
+                  checked={filterFormData.bedroom}
                   onChange={handleChange}
                 />
                 <label className="form-check-label" htmlFor="bedroom">
@@ -144,6 +150,7 @@ const FilterForm = (props) => {
                   type="checkbox"
                   id="other"
                   name="other"
+                  checked={filterFormData.other}
                   onChange={handleChange}
                 />
                 <label className="form-check-label" htmlFor="other">
@@ -162,6 +169,7 @@ const FilterForm = (props) => {
                   type="checkbox"
                   id="lowPrice"
                   name="lowPrice"
+                  checked={filterFormData.lowPrice}
                   onChange={handleChange}
                 />
                 <label className="form-check-label" htmlFor="lowPrice">
@@ -175,6 +183,7 @@ const FilterForm = (props) => {
                   type="checkbox"
                   id="mediumPrice"
                   name="mediumPrice"
+                  checked={filterFormData.mediumPrice}
                   onChange={handleChange}
                 />
                 <label className="form-check-label" htmlFor="mediumPrice">
@@ -188,6 +197,7 @@ const FilterForm = (props) => {
                   type="checkbox"
                   id="highPrice"
                   name="highPrice"
+                  checked={filterFormData.highPrice}
                   onChange={handleChange}
                 />
                 <label className="form-check-label" htmlFor="highPrice">

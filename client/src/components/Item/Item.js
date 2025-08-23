@@ -6,21 +6,25 @@ import SearchBar from './SearchBar';
 
 const Item = ({ data }) => {
   // Sets filterSearchTerm
-  const [filterSearchTerm, setFilterSearchTerm] = useState();
+  const [filterSearchTerm, setFilterSearchTerm] = useState('');
   // Sets filters
-  const [filters, setFilters] = useState();
+  const [filters, setFilters] = useState('');
   // Gets data from child
   const getSearchTermData = (childData) => {
     setFilterSearchTerm(childData);
   };
+
   // Gets data from child
-  const getFiltersData = (chilData) => {
-    setFilters(chilData);
+
+  const getFiltersData = (childData) => {
+    setFilters(childData);
   };
-  console.log(filters);
+
   // To reset the search
-  // Reset handler
-  const handleReset = () => setFilterSearchTerm('');
+  const handleReset = () => {
+    setFilters('');
+    setFilterSearchTerm('');
+  };
 
   return (
     <div className="container mt-5">
@@ -40,6 +44,7 @@ const Item = ({ data }) => {
                 : item.type.includes(filterSearchTerm) ||
                     item.room.includes(filterSearchTerm);
             })
+
             .map((item) => (
               <div
                 key={item.id || item.name}
