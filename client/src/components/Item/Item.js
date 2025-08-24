@@ -44,7 +44,53 @@ const Item = ({ data }) => {
                 : item.type.includes(filterSearchTerm) ||
                     item.room.includes(filterSearchTerm);
             })
+            // This filtering function was done using AI
+            .filter((item) => {
+              // For the case that no filter is active
+              if (!filters) return item;
 
+              // Category filter (room)
+              const categoryKeys = [
+                'kitchen',
+                'bedroom',
+                'livingRoom',
+                'diningRoom',
+                'outdoor',
+                'office',
+                'other',
+              ];
+              // Makes an array of rooms that are check boxed
+              const categoryChecked = categoryKeys.filter(
+                (key) => filters[key]
+              );
+              const categoryMatch =
+                categoryChecked.length === 0
+                  ? // if no room is checked, return true or the item
+                    true
+                  : // if there are, return those that are included in the room list of the item
+                    categoryChecked.some((key) =>
+                      item.room.toLowerCase().includes(key.toLowerCase())
+                    );
+
+              // Price filter
+              let priceMatch = true;
+              if (
+                filters.lowPrice ||
+                filters.mediumPrice ||
+                filters.highPrice
+              ) {
+                // the array of prices
+                const price = item.price;
+                // array of those items with prices in this range
+                // if lowPrice and highPrice are selected, only those will appear.
+                priceMatch =
+                  (filters.lowPrice && price <= 50) ||
+                  (filters.mediumPrice && price > 50 && price <= 150) ||
+                  (filters.highPrice && price > 150);
+              }
+              // Returns the matched items with the criteria.
+              return categoryMatch && priceMatch;
+            })
             .map((item) => (
               <div
                 key={item.id || item.name}

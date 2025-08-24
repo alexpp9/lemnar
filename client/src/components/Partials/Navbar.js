@@ -11,7 +11,7 @@ const Navbar = () => {
             <img
               src="/logo.png"
               alt="Lemnar company logo"
-              className="rounded"
+              className="rounded shadow"
               style={{ height: '58px', width: '58px', objectFit: 'cover' }}
             />
           </Link>
