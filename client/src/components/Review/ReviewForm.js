@@ -47,7 +47,74 @@ const ReviewForm = ({ data }) => {
     <form className="border rounded p-3 bg-white shadow-sm mb-3 shadow-lg">
       <h6 className="border-bottom pb-2 mb-3 text-muted">Leave a comment</h6>
       <div className="mb-3">
-        <label htmlFor="customRange2" className="form-label">
+        {/* New Rating */}
+        <fieldset className="starability-basic">
+          <legend style={{ width: '200px' }}>Leave a rating:</legend>
+          <input
+            type="radio"
+            id="rate1"
+            name="rating"
+            value="1"
+            checked={rating === '1'}
+            onChange={handleRating}
+          />
+          <label htmlFor="rate1" title="1 star">
+            1 star
+          </label>
+
+          <input
+            type="radio"
+            id="rate2"
+            name="rating"
+            value="2"
+            checked={rating === '2'}
+            onChange={handleRating}
+          />
+          <label htmlFor="rate2" title="2 stars">
+            2 stars
+          </label>
+
+          <input
+            type="radio"
+            id="rate3"
+            name="rating"
+            value="3"
+            checked={rating === '3'}
+            onChange={handleRating}
+          />
+          <label htmlFor="rate3" title="3 stars">
+            3 stars
+          </label>
+
+          <input
+            type="radio"
+            id="rate4"
+            name="rating"
+            value="4"
+            checked={rating === '4'}
+            onChange={handleRating}
+          />
+          <label htmlFor="rate4" title="4 stars">
+            4 stars
+          </label>
+
+          <input
+            type="radio"
+            id="rate5"
+            name="rating"
+            value="5"
+            checked={rating === '5'}
+            onChange={handleRating}
+          />
+          <label htmlFor="rate5" title="5 stars">
+            5 stars
+          </label>
+
+          <span className="starability-focus-ring"></span>
+        </fieldset>
+
+        {/* Old rating */}
+        {/* <label htmlFor="customRange2" className="form-label">
           Rating: {rating}
         </label>
         <input
@@ -59,7 +126,7 @@ const ReviewForm = ({ data }) => {
           max="5"
           id="rating"
           title={`Rating: ${rating}`}
-        ></input>
+        ></input> */}
       </div>
       <div className="mb-3">
         <textarea

@@ -6,6 +6,9 @@ import { useAuth } from '../../hooks/AuthProvider';
 
 import { client } from '../Utilities/Client';
 
+// import the css
+import './../../index.css';
+
 // Components
 import ReviewForm from '../Review/ReviewForm';
 
@@ -158,16 +161,21 @@ const ItemDetails = () => {
               {item.reviews_ref.map((review) => (
                 <li key={review._id} className="list-group-item">
                   <div className="d-flex justify-content-between align-items-center">
-                    <strong>{review.author.username}</strong>
+                    <span>
+                      By &mdash; <strong>{review.author.username}</strong>
+                    </span>
                     <small className="text-muted">
                       {new Date(review.createdAt).toLocaleString('en-GB')}
                     </small>
                   </div>
-
+                  {/* If true, show */}
                   {review.rating && (
-                    <p className="mb-1">
-                      <span className="fw-semibold">Rating:</span>{' '}
-                      {review.rating}/5
+                    <p
+                      className="m-1 starability-result"
+                      data-rating={review.rating}
+                    >
+                      {/* This is for accessbility purposes */}
+                      Rated: {review.rating} stars
                     </p>
                   )}
                   <p className="mb-0">{review.body}</p>
