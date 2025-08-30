@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-
+import { RotatingLines } from 'react-loader-spinner';
 import { client } from '../Utilities/Client';
 
 const UpdateItemForm = () => {
@@ -25,7 +25,7 @@ const UpdateItemForm = () => {
     room: itemToUpdate.room,
     description: itemToUpdate.description,
   });
-
+  const [spinner, setSpinner] = useState(false);
   // Handles change on all fields at once instead of doing it for each input field
   // Function improved with AI.
   const handleChange = (e) => {
@@ -38,17 +38,19 @@ const UpdateItemForm = () => {
   // Handles the submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setSpinner(true);
     try {
-      updateItem(formData);
+      await updateItem(formData);
       navigate(`/`);
     } catch (error) {
       console.error('Error during submit:', error);
+    } finally {
+      setSpinner(false);
     }
   };
   // API call function using axios instance
   const updateItem = (itemData) => {
-    client
+    return client
       .put(`/api/items/${itemToUpdate._id}`, itemData)
       .then((response) => {
         console.log('Item updated successfully', response.data);
@@ -214,7 +216,15 @@ const UpdateItemForm = () => {
               onClick={handleSubmit}
               className="btn btn-primary fw-semibold"
             >
-              Update Item
+              <span className="m-1">Update Item</span>
+              <RotatingLines
+                visible={spinner}
+                height="36"
+                width="36"
+                strokeWidth="5"
+                ariaLabel="rotating-lines-loading"
+                strokeColor="#fa8128"
+              />
             </button>
           </div>
           <Link to="/home">Back home</Link>

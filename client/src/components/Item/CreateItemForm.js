@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { client } from '../Utilities/Client';
-
+import { RotatingLines } from 'react-loader-spinner';
 import axios from 'axios';
 
 const CreateItemForm = () => {
@@ -21,6 +21,8 @@ const CreateItemForm = () => {
     image_url: '',
     description: '',
   });
+
+  const [spinner, setSpinner] = useState(false);
   // Handles change on all fields at once instead of doing it for each input field
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -29,6 +31,7 @@ const CreateItemForm = () => {
       [name]: value,
     }));
   };
+
   // Upload to cloudinary and get back URLs
   // Function written with the help of AI
   const uploadImagesToCloudinary = async (files) => {
@@ -62,7 +65,7 @@ const CreateItemForm = () => {
   // Handles the submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setSpinner(true);
     try {
       const uploadedImageUrls = await uploadImagesToCloudinary(
         // if no data is returned to Cloudinary, set uploadedImagesUrls to empty array
@@ -75,17 +78,20 @@ const CreateItemForm = () => {
         image_url: uploadedImageUrls,
       };
       // make new item
-      createItem(itemData);
+
+      await createItem(itemData);
 
       navigate(`/`);
     } catch (error) {
       console.error('Error during submit:', error);
+    } finally {
+      setSpinner(false);
     }
   };
 
   // API call function using axios instance
   const createItem = (itemData) => {
-    client
+    return client
       .post('/api/items', itemData)
       .then((response) => {
         console.log('Item created successfully', response.data);
@@ -273,7 +279,15 @@ const CreateItemForm = () => {
               onClick={handleSubmit}
               className="btn btn-primary fw-semibold"
             >
-              Create Item
+              <span className="m-1">Create Item</span>
+              <RotatingLines
+                visible={spinner}
+                height="36"
+                width="36"
+                strokeWidth="5"
+                ariaLabel="rotating-lines-loading"
+                strokeColor="#fa8128"
+              />
             </button>
           </div>
           <Link to="/home">Back home</Link>
