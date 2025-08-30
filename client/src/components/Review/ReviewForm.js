@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useAuth } from '../../hooks/AuthProvider';
+import { RotatingLines } from 'react-loader-spinner';
 import { client } from '../Utilities/Client';
 
 const ReviewForm = ({ data }) => {
@@ -8,6 +9,7 @@ const ReviewForm = ({ data }) => {
   //   Form fields state
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState('');
+  const [spinner, setSpinner] = useState(false);
 
   // Handles comment change
   const handleComment = (e) => {
@@ -18,15 +20,22 @@ const ReviewForm = ({ data }) => {
   };
 
   // Form Submission
-  const handleCreateComment = (e) => {
+  const handleCreateComment = async (e) => {
     e.preventDefault();
-    createComment(comment, rating);
+    setSpinner(true);
+    try {
+      await createComment(comment, rating);
+    } catch (error) {
+      console.log('Error: Could not create comment!', error);
+    } finally {
+      setSpinner(false);
+    }
   };
 
   // Create commnet
   // API POST CALL
   const createComment = (comment, rating) => {
-    client
+    return client
       .post('/api/items/:id/reviews', {
         body: comment,
         rating: rating,
@@ -35,12 +44,12 @@ const ReviewForm = ({ data }) => {
       })
       .then((response) => {
         console.log('Comment created', response.data);
+        setComment('');
+        setRating('');
       })
       .catch((error) => {
         console.error('Error:', error);
       });
-    setComment('');
-    setRating('');
   };
 
   return (
@@ -112,21 +121,6 @@ const ReviewForm = ({ data }) => {
 
           <span className="starability-focus-ring"></span>
         </fieldset>
-
-        {/* Old rating */}
-        {/* <label htmlFor="customRange2" className="form-label">
-          Rating: {rating}
-        </label>
-        <input
-          onChange={handleRating}
-          type="range"
-          value={rating}
-          className="form-range"
-          min="0"
-          max="5"
-          id="rating"
-          title={`Rating: ${rating}`}
-        ></input> */}
       </div>
       <div className="mb-3">
         <textarea
@@ -145,7 +139,15 @@ const ReviewForm = ({ data }) => {
           className="btn btn-outline-primary btn-sm fw-semibold"
           onClick={handleCreateComment}
         >
-          Post Comment
+          <span className="m-1">Post comment</span>
+          <RotatingLines
+            visible={spinner}
+            height="36"
+            width="36"
+            strokeWidth="5"
+            ariaLabel="rotating-lines-loading"
+            strokeColor="#fa8128"
+          />
         </button>
       </div>
     </form>

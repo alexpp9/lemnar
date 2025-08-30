@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { client } from '../Utilities/Client';
-// import auth from '../Utilities/PrivateRoute';
+import { RotatingLines } from 'react-loader-spinner';
 
 const EmailForm = () => {
   // Instantiate useNavigate
@@ -13,6 +13,8 @@ const EmailForm = () => {
     subject: '',
     message: '',
   });
+
+  const [spinner, setSpinner] = useState(false);
   // Handles change on all fields at once instead of doing it for each input field
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,20 +27,22 @@ const EmailForm = () => {
   // Handles the submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    setSpinner(true);
     try {
       // Send email
-      sendEmail(formData);
+      await sendEmail(formData);
       // Redirect back
       navigate(`/contact`);
     } catch (error) {
       console.error('Error occured during sending the email:', error);
+    } finally {
+      setSpinner(false);
     }
   };
 
   // API call function using axios instance
   const sendEmail = (emailData) => {
-    client
+    return client
       .post('/contact', emailData)
       .then((response) => {
         console.log('Email send successfully', response.data);
@@ -127,7 +131,15 @@ const EmailForm = () => {
               className="btn btn-primary w-100"
               onClick={handleSubmit}
             >
-              Send Message
+              <span className="m-1">Send Message</span>
+              <RotatingLines
+                visible={spinner}
+                height="36"
+                width="36"
+                strokeWidth="5"
+                ariaLabel="rotating-lines-loading"
+                strokeColor="#fa8128"
+              />
             </button>
           </form>
         </div>
