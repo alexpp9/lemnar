@@ -59,6 +59,7 @@ const AuthProvider = ({ children }) => {
       setUser(null);
       setToken('');
       localStorage.removeItem('site');
+      window.flash('Logged you out!', 'error');
       navigate('/home');
     } catch (err) {
       console.error('Logout error:', err);

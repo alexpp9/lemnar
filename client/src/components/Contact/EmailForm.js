@@ -46,7 +46,7 @@ const EmailForm = () => {
       .post('/contact', emailData)
       .then((response) => {
         console.log('Email send successfully', response.data);
-
+        window.flash('Email was successfully send!', 'success');
         // Reset the form fields after successful creation
         setFormData({
           name: '',

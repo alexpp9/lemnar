@@ -35,8 +35,16 @@ const RegisterForm = () => {
   // Form Submission
   const handleRegister = (e) => {
     e.preventDefault();
-
-    createUser(username, email, password);
+    try {
+      createUser(username, email, password);
+      window.flash('User registered with success!', 'success');
+    } catch (err) {
+      console.log(`Error:`, err);
+      window.flash(
+        'Error while trying to register user, please try again!',
+        'error'
+      );
+    }
   };
 
   // API POST CALL
@@ -56,6 +64,7 @@ const RegisterForm = () => {
     setUsername('');
     setEmail('');
     setPassword('');
+
     nagivate('/home');
   };
 

@@ -52,9 +52,11 @@ const ItemDetails = () => {
   const deleteItem = async () => {
     try {
       await client.delete(`/api/items/${item._id}`);
+      window.flash('Item successfully deleted!', 'success');
       navigate('/home');
     } catch (err) {
       console.error('Error occured while trying to delete:', err);
+      window.flash('Error while deleting the item, please try again!', 'error');
     }
   };
 
@@ -64,8 +66,13 @@ const ItemDetails = () => {
       await client.delete(`/api/items/${item._id}/reviews/${reviewID}`);
       const response = await client.get(`/api/items/${id}`);
       setItem(response.data.data);
+      window.flash('Review successfully deleted!', 'success');
     } catch (err) {
       console.error('Error occured while trying to delete:', err);
+      window.flash(
+        'Error while deleting the review, please try again!',
+        'error'
+      );
     }
   };
   return (

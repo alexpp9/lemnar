@@ -41,9 +41,11 @@ const UpdateItemForm = () => {
     setSpinner(true);
     try {
       await updateItem(formData);
+      window.flash('Item successfully updated!', 'info');
       navigate(`/`);
     } catch (error) {
       console.error('Error during submit:', error);
+      window.flash('Error while updating the item, please try again!', 'error');
     } finally {
       setSpinner(false);
     }

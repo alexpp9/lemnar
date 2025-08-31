@@ -80,10 +80,14 @@ const CreateItemForm = () => {
       // make new item
 
       await createItem(itemData);
-
+      window.flash('Item successfully created!', 'success');
       navigate(`/`);
     } catch (error) {
       console.error('Error during submit:', error);
+      window.flash(
+        'There was an error while trying to create the item, please try again!',
+        'error'
+      );
     } finally {
       setSpinner(false);
     }

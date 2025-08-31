@@ -32,10 +32,11 @@ const LoginForm = () => {
         username: '',
         password: '',
       });
+      window.flash('Logged you in!', 'success');
       navigate('/home');
       return;
     }
-    alert('please provide a valid input');
+    window.flash('Please provide a valid input!', 'error');
   };
   return (
     <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
