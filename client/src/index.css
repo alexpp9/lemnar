@@ -19,6 +19,49 @@
   z-index: 1;
 }
 
+/* Flash messages */
+.alert {
+  color: #fff;
+  border-radius: 10px;
+  position: fixed; /* fixed so it stays put while scrolling */
+  top: 50px;
+  right: 10px;
+  padding: 16px 20px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  z-index: 1111;
+}
+
+.alert p {
+  margin: 0;
+}
+
+.alert-success {
+  background: lightgreen;
+}
+.alert-error {
+  background: lightcoral;
+}
+.alert-warning {
+  background: #f0ad4e;
+}
+.alert-info {
+  background: #5bc0de;
+}
+
+.close {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  margin-left: auto;
+}
+
 /* Star rating  starability
 accessbile way to add star rating
 from github

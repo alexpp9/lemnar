@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useAuth } from '../../hooks/AuthProvider';
+
 import { RotatingLines } from 'react-loader-spinner';
 import { client } from '../Utilities/Client';
 
 const ReviewForm = ({ data }) => {
   // For protection
   const auth = useAuth();
+
   //   Form fields state
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState('');
@@ -25,10 +27,19 @@ const ReviewForm = ({ data }) => {
     setSpinner(true);
     try {
       await createComment(comment, rating);
+      // success
+      window.flash('Record has been created successfully!', 'success');
     } catch (error) {
       console.log('Error: Could not create comment!', error);
+      window.flash('Failed to create comment. Please try again.', 'error');
     } finally {
       setSpinner(false);
+      // Refreshes the page.
+      // Crude method to display comment without manually refreshing the page after posting comment
+      // Timeout to allow the flash message to be displayed for a little.
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000); // Wait for 3 seconds before reload
     }
   };
 

@@ -39,7 +39,7 @@ const ItemDetails = () => {
   // Checks truthy values - if unthruthy, means no item so show message.
   if (!item) {
     return (
-      <div>
+      <div className="row">
         <Link className="btn btn-primary" to="/home">
           Keep browsing
         </Link>

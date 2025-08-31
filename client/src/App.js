@@ -14,9 +14,18 @@ import Contact from './components/Contact/Contact';
 import IndexPage from './components/IndexPage';
 import Navbar from './components/Partials/Navbar';
 import Footer from './components/Partials/Footer';
-
+// Flash
+import Flash from './components/Flash/Flash';
 // React Router - navigation import
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
+// Global Flash message
+// Import the Bus
+import Bus from './components/Utilities/Bus';
+
+// Globl function to emit tailored messages.
+window.flash = (message, type = 'success') =>
+  Bus.emit('flash', { message, type });
 
 function App() {
   return (
@@ -25,6 +34,7 @@ function App() {
         <AuthProvider>
           <Navbar />
           <main className="flex-grow-1">
+            <Flash />
             <Routes>
               {/* Route to login */}
               <Route path="/" element={<IndexPage />} />
@@ -33,7 +43,6 @@ function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/register" element={<RegisterForm />} />
               <Route path="/details/:id" element={<ItemDetails />} />
-              {/* <Route path="/details" element={<ItemDetails />} /> */}
 
               {/* Private routes */}
               <Route element={<PrivateRoute />}>
