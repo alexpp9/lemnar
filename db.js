@@ -4,7 +4,7 @@ const { mongoURL, dbUrl } = require('./config');
 // Connection to the DB (clurster)
 const connectDB = async () => {
   try {
-    await mongoose.connect(dbUrl, {
+    await mongoose.connect(mongoURL, {
       family: 4,
     });
     console.log(`Connection to DB established!`);

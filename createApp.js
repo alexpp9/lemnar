@@ -1,6 +1,6 @@
 const express = require('express');
 const session = require('express-session');
-const { sessionSecret } = require('./config');
+const { sessionSecret, mongoURL } = require('./config');
 const cors = require('cors');
 // items
 const itemRoutes = require('./routes/items');
@@ -10,6 +10,10 @@ const reviewRoutes = require('./routes/reviews');
 const userRoutes = require('./routes/users');
 // email route
 const emailRoute = require('./routes/contact');
+
+// Mongo session storage
+const MongoStore = require('connect-mongo');
+
 module.exports.createApp = () => {
   const app = express();
   // Controllers for Item model;
@@ -26,22 +30,40 @@ module.exports.createApp = () => {
   // Allows Express to understand JSON
   app.use(express.json());
 
-  // Tells Express to use session
-  app.use(
-    session({
+  // Configure Session Config Mongo
+  const store = MongoStore.create({
+    mongoUrl: mongoURL,
+    touchAfter: 24 * 60 * 60,
+    crypto: {
       secret: sessionSecret,
-      // If true, it'll make a new session ID every time you make a request to the server
-      saveUninitialized: false,
-      // True, forces the session to be resave in the store, even if unmodified
-      resave: false,
-      cookie: {
-        // 24h
-        maxAge: 60 * 60 * 24,
-        secure: false,
-        sameSite: 'lax',
-      },
-    })
-  );
+    },
+  });
+
+  // Look for erros in saving session with mongo
+  store.on('error', function (error) {
+    console.log(`Session store error`);
+    console.log(error);
+  });
+
+  // Configure session
+  const sessionConfig = {
+    store,
+    secret: sessionSecret,
+    // If true, it'll make a new session ID every time you make a request to the server
+    saveUninitialized: false,
+    // True, forces the session to be resave in the store, even if unmodified
+    resave: false,
+    cookie: {
+      // 24h
+      expires: Date.now() + 60 * 60 * 24,
+      maxAge: 60 * 60 * 24,
+      secure: false,
+      sameSite: 'lax',
+    },
+  };
+
+  // Tells Express to use session
+  app.use(session(sessionConfig));
 
   // Routes
   // ======
