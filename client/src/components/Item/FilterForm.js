@@ -44,14 +44,6 @@ const FilterForm = (props) => {
   };
   return (
     <>
-      {/*         'kitchen',
-        'living room',
-        'bedroom',
-        'dining room',
-        'office',
-        'outdoor',
-        'other', */}
-      {/* Sidebar form */}
       <div className="col-12 col-md-3 mb-4">
         <div className="p-3 border rounded bg-light">
           <h5 className="mb-3">Filter Items</h5>
