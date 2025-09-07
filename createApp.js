@@ -63,7 +63,7 @@ module.exports.createApp = () => {
       // 24h
       expires: Date.now() + 60 * 60 * 24,
       maxAge: 60 * 60 * 24,
-      secure: false,
+      secure: true,
       sameSite: 'none',
     },
   };
