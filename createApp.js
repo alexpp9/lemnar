@@ -18,16 +18,16 @@ module.exports.createApp = () => {
   const app = express();
   // Controllers for Item model;
 
-  const allowOrigins = [
-    'http://localhost:3001',
-    'https://lemnar.onrender.com',
-    'https://lemnar.netlify.app/home',
-  ];
+  // const allowOrigins = [
+  //   'http://localhost:3001',
+  //   'https://lemnar.onrender.com',
+  //   'https://lemnar.netlify.app/home',
+  // ];
 
   // CORS permission
   app.use(
     cors({
-      origin: allowOrigins,
+      origin: 'https://lemnar.netlify.app',
       methods: ['GET', 'POST', 'PUT', 'DELETE'],
       credentials: true,
     })
