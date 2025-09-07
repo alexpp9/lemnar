@@ -151,14 +151,14 @@ const ReviewForm = ({ data }) => {
           onClick={handleCreateComment}
         >
           <span className="m-1">Post comment</span>
-          <RotatingLines
+          {/* <RotatingLines
             visible={spinner}
             height="36"
             width="36"
             strokeWidth="5"
             ariaLabel="rotating-lines-loading"
             strokeColor="#fa8128"
-          />
+          /> */}
         </button>
       </div>
     </form>

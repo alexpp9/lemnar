@@ -284,14 +284,14 @@ const CreateItemForm = () => {
               className="btn btn-primary fw-semibold"
             >
               <span className="m-1">Create Item</span>
-              <RotatingLines
+              {/* <RotatingLines
                 visible={spinner}
                 height="36"
                 width="36"
                 strokeWidth="5"
                 ariaLabel="rotating-lines-loading"
                 strokeColor="#fa8128"
-              />
+              /> */}
             </button>
           </div>
           <Link to="/home">Back home</Link>

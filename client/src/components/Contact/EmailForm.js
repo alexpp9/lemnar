@@ -132,14 +132,14 @@ const EmailForm = () => {
               onClick={handleSubmit}
             >
               <span className="m-1">Send Message</span>
-              <RotatingLines
+              {/* <RotatingLines
                 visible={spinner}
                 height="36"
                 width="36"
                 strokeWidth="5"
                 ariaLabel="rotating-lines-loading"
                 strokeColor="#fa8128"
-              />
+              /> */}
             </button>
           </form>
         </div>
