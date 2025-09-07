@@ -1,4 +1,4 @@
-import Map from './Map';
+import LeafLetMap from './LeafLetMap';
 import EmailForm from './EmailForm';
 import ContactDetails from './ContactDetails';
 const Contact = () => {
@@ -12,7 +12,7 @@ const Contact = () => {
         {/* Contact Form */}
         <EmailForm />
         {/* Map */}
-        <Map />
+        <LeafLetMap />
       </div>
 
       {/* Contact Info Section */}

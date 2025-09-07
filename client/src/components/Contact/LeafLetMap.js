@@ -4,7 +4,7 @@ import { Icon } from 'leaflet';
 const centerPosition = [46.9912496612831, 26.949505559324678];
 const lemnarPosition = [46.996592394744276, 26.938211518481594];
 const googleMapsUrl = 'https://maps.app.goo.gl/XHZQnKhMf8GhgWYq5';
-const Map = () => {
+const LeafLetMap = () => {
   // Custome Icon Marker
   const customIcon = new Icon({
     iconUrl:
@@ -44,4 +44,4 @@ const Map = () => {
   );
 };
 
-export default Map;
+export default LeafLetMap;
