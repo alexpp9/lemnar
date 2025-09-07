@@ -23,6 +23,8 @@ module.exports.createApp = () => {
   //   'https://lemnar.onrender.com',
   //   'https://lemnar.netlify.app/home',
   // ];
+  // Tell Express it's behind one proxy (Render's reverse proxy)
+  app.set('trust proxy', 1);
 
   // CORS permission
   app.use(
