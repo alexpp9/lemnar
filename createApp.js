@@ -34,7 +34,7 @@ module.exports.createApp = () => {
 
   // Configure Session Config Mongo
   const store = MongoStore.create({
-    mongoURL: dbUrl,
+    mongoUrl: dbUrl,
     touchAfter: 24 * 60 * 60,
     crypto: {
       secret: sessionSecret,
