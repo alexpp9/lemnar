@@ -60,8 +60,7 @@ module.exports.createApp = () => {
     // True, forces the session to be resave in the store, even if unmodified
     resave: false,
     cookie: {
-      // 24h
-      expires: Date.now() + 60 * 60 * 24,
+      httpOnly: true,
       maxAge: 60 * 60 * 24,
       secure: true,
       sameSite: 'none',
