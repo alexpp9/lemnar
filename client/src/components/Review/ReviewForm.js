@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../../hooks/AuthProvider';
 
-import { RotatingLines } from 'react-loader-spinner';
+// import { RotatingLines } from 'react-loader-spinner';
 import { client } from '../Utilities/Client';
 
 const ReviewForm = ({ data }) => {
