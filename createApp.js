@@ -1,6 +1,6 @@
 const express = require('express');
 const session = require('express-session');
-const { sessionSecret, mongoURL } = require('./config');
+const { sessionSecret, dbUrl } = require('./config');
 const cors = require('cors');
 // items
 const itemRoutes = require('./routes/items');
@@ -34,7 +34,7 @@ module.exports.createApp = () => {
 
   // Configure Session Config Mongo
   const store = MongoStore.create({
-    mongoUrl: mongoURL,
+    mongoURL: dbUrl,
     touchAfter: 24 * 60 * 60,
     crypto: {
       secret: sessionSecret,

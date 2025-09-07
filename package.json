@@ -1,10 +1,7 @@
 {
-  "engines": {
-    "node": "20.15.1"
-  },
   "name": "lemnar",
   "version": "1.0.0",
-  "description": "CA for Advanced Programming, DBS Course. Presentation website for a small furniture company.",
+  "description": "Final Project - Lemnar",
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js",
