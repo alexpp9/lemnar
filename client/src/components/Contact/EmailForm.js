@@ -14,7 +14,7 @@ const EmailForm = () => {
     message: '',
   });
 
-  const [spinner, setSpinner] = useState(false);
+  // const [spinner, setSpinner] = useState(false);
   // Handles change on all fields at once instead of doing it for each input field
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,7 +27,7 @@ const EmailForm = () => {
   // Handles the submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSpinner(true);
+    // setSpinner(true);
     try {
       // Send email
       await sendEmail(formData);
@@ -36,7 +36,7 @@ const EmailForm = () => {
     } catch (error) {
       console.error('Error occured during sending the email:', error);
     } finally {
-      setSpinner(false);
+      // setSpinner(false);
     }
   };
 

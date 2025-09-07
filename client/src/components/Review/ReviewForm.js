@@ -11,7 +11,7 @@ const ReviewForm = ({ data }) => {
   //   Form fields state
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState('');
-  const [spinner, setSpinner] = useState(false);
+  // const [spinner, setSpinner] = useState(false);
 
   // Handles comment change
   const handleComment = (e) => {
@@ -24,7 +24,7 @@ const ReviewForm = ({ data }) => {
   // Form Submission
   const handleCreateComment = async (e) => {
     e.preventDefault();
-    setSpinner(true);
+    // setSpinner(true);
     try {
       await createComment(comment, rating);
       // success
@@ -33,7 +33,7 @@ const ReviewForm = ({ data }) => {
       console.log('Error: Could not create comment!', error);
       window.flash('Failed to create comment. Please try again.', 'error');
     } finally {
-      setSpinner(false);
+      // setSpinner(false);
       // Refreshes the page.
       // Crude method to display comment without manually refreshing the page after posting comment
       // Timeout to allow the flash message to be displayed for a little.

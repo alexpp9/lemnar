@@ -22,7 +22,7 @@ const CreateItemForm = () => {
     description: '',
   });
 
-  const [spinner, setSpinner] = useState(false);
+  // const [spinner, setSpinner] = useState(false);
   // Handles change on all fields at once instead of doing it for each input field
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -65,7 +65,7 @@ const CreateItemForm = () => {
   // Handles the submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSpinner(true);
+    // setSpinner(true);
     try {
       const uploadedImageUrls = await uploadImagesToCloudinary(
         // if no data is returned to Cloudinary, set uploadedImagesUrls to empty array
@@ -89,7 +89,7 @@ const CreateItemForm = () => {
         'error'
       );
     } finally {
-      setSpinner(false);
+      // setSpinner(false);
     }
   };
 

@@ -25,7 +25,7 @@ const UpdateItemForm = () => {
     room: itemToUpdate.room,
     description: itemToUpdate.description,
   });
-  const [spinner, setSpinner] = useState(false);
+  // const [spinner, setSpinner] = useState(false);
   // Handles change on all fields at once instead of doing it for each input field
   // Function improved with AI.
   const handleChange = (e) => {
@@ -38,7 +38,7 @@ const UpdateItemForm = () => {
   // Handles the submit
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSpinner(true);
+    // setSpinner(true);
     try {
       await updateItem(formData);
       window.flash('Item successfully updated!', 'info');
@@ -47,7 +47,7 @@ const UpdateItemForm = () => {
       console.error('Error during submit:', error);
       window.flash('Error while updating the item, please try again!', 'error');
     } finally {
-      setSpinner(false);
+      // setSpinner(false);
     }
   };
   // API call function using axios instance
