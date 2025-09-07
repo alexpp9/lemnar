@@ -6,7 +6,7 @@ import axios from 'axios';
 // Axios instance
 const client = axios.create({
   // baseURL: 'http://localhost:3000',
-  baseURL: "'https://lemnar.onrender.com'",
+  baseURL: 'https://lemnar.onrender.com',
 });
 
 const RegisterForm = () => {
