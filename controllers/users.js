@@ -37,9 +37,22 @@ module.exports.registeredUser = async (req, res) => {
 
     // If user is successfully registered; add user id to <session>
     req.session.user = user;
-    res.status(201).json({
-      status: 'success',
-      message: 'User created!',
+
+    // Forced the session to be saved before a response
+
+    req.session.save((err) => {
+      if (err) {
+        console.error('Session save error:', err);
+        return res
+          .status(500)
+          .json({ status: 'error', message: 'Session save failed' });
+      }
+
+      res.status(201).json({
+        status: 'success',
+        message: 'User created!',
+        data: user,
+      });
     });
   } catch (error) {
     res
@@ -78,10 +91,20 @@ module.exports.loginUser = async (req, res) => {
 
     // Attaching user to session;
     req.session.user = user;
-    res.status(200).json({
-      status: 'success',
-      message: 'User logged in!',
-      data: user,
+    // Save as above, forces save before server response
+    req.session.save((err) => {
+      if (err) {
+        console.error('Session save error:', err);
+        return res
+          .status(500)
+          .json({ status: 'error', message: 'Session save failed' });
+      }
+
+      res.status(200).json({
+        status: 'success',
+        message: 'User logged in!',
+        data: user,
+      });
     });
   } catch (error) {
     res.status(400).json({ status: 'error', message: 'Failed to login user' });
@@ -90,9 +113,24 @@ module.exports.loginUser = async (req, res) => {
 
 // Logout user
 module.exports.logoutUser = (req, res) => {
-  // Removes the user from the sesson, thus logging user out
-  req.session.user = null;
-  res.status(201).send('Logged you out!');
+  // Destroys the document from MongoAtlas
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('Logout error:', err);
+      return res
+        .status(500)
+        .json({ status: 'error', message: 'Failed to logout' });
+    }
+
+    // Instructs browser to clear the cookie
+    res.clearCookie('connect.sid', {
+      path: '/',
+      secure: true, // must match your session cookie settings
+      sameSite: 'none',
+    });
+
+    res.status(200).json({ status: 'success', message: 'Logged you out!' });
+  });
 };
 
 // Check authentification status
