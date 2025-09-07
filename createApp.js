@@ -18,10 +18,12 @@ module.exports.createApp = () => {
   const app = express();
   // Controllers for Item model;
 
+  const allowOrigins = ['http://localhost:3001', 'https://lemnar.onrender.com'];
+
   // CORS permission
   app.use(
     cors({
-      origin: 'http://localhost:3001',
+      origin: allowOrigins,
       methods: ['GET', 'POST', 'PUT', 'DELETE'],
       credentials: true,
     })

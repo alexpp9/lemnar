@@ -10,7 +10,10 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/api/items');
+        // const response = await axios.get('http://localhost:3000/api/items');
+        const response = await axios.get(
+          'https://lemnar.onrender.com/api/items'
+        );
         setData(response.data.data);
         return;
       } catch (err) {
