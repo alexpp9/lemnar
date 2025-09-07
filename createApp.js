@@ -18,7 +18,11 @@ module.exports.createApp = () => {
   const app = express();
   // Controllers for Item model;
 
-  const allowOrigins = ['http://localhost:3001', 'https://lemnar.onrender.com'];
+  const allowOrigins = [
+    'http://localhost:3001',
+    'https://lemnar.onrender.com',
+    'https://lemnar.netlify.app/home',
+  ];
 
   // CORS permission
   app.use(
@@ -60,7 +64,7 @@ module.exports.createApp = () => {
       expires: Date.now() + 60 * 60 * 24,
       maxAge: 60 * 60 * 24,
       secure: false,
-      sameSite: 'lax',
+      sameSite: 'none',
     },
   };
 
